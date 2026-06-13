@@ -1,1340 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-17MZZZR4JN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-17MZZZR4JN');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASMYA</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #080808;
-    --white: #f5f0ea;
-    --gold: #c9a84c;
-    --gold-light: #e8d5a3;
-    --gray: #1a1a1a;
-    --gray-mid: #2a2a2a;
-    --text-muted: #666;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Montserrat', sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 28px;
-    height: 28px;
-    border: 1px solid rgba(201, 168, 76, 0.6);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-  }
-  .cursor-ring.hover {
-    width: 44px;
-    height: 44px;
-    border-color: var(--gold);
-  }
-
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 28px 48px;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
-  }
-
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 8px;
-    color: var(--white);
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .logo span {
-    color: var(--gold);
-  }
-
-  .nav-right {
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  /* MAIN CAROUSEL - Desktop horizontal */
-  .carousel-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .carousel-track {
-    display: flex;
-    height: 100%;
-    will-change: transform;
-  }
-
-  .creator-slide {
-    min-width: 100vw;
-    height: 100vh;
-    position: relative;
-    flex-shrink: 0;
-    cursor: none;
-  }
-
-  .creator-slide .bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center top;
-    filter: brightness(0.45);
-    transition: filter 0.6s ease;
-  }
-
-  .creator-slide:hover .bg {
-    filter: brightness(0.55);
-  }
-
-  /* Gradient overlay */
-  .creator-slide::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      rgba(8,8,8,0.8) 0%,
-      rgba(8,8,8,0.1) 40%,
-      rgba(8,8,8,0.1) 60%,
-      rgba(8,8,8,0.8) 100%
-    );
-    pointer-events: none;
-  }
-
-  .creator-slide .content {
-    position: absolute;
-    bottom: 120px;
-    left: 80px;
-    z-index: 2;
-    max-width: 420px;
-  }
-
-  .creator-number {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    font-weight: 300;
-  }
-
-  .creator-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 6vw, 80px);
-    font-weight: 300;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 16px;
-    letter-spacing: 2px;
-  }
-
-  .creator-tagline {
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--gold-light);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    font-weight: 200;
-    opacity: 0.8;
-  }
-
-  .btn-discover {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 32px;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: transparent;
-    cursor: none;
-    transition: all 0.3s ease;
-    font-weight: 300;
-  }
-
-  .btn-discover:hover {
-    background: var(--gold);
-    color: var(--black);
-  }
-
-  .btn-discover .arrow {
-    width: 20px;
-    height: 1px;
-    background: currentColor;
-    position: relative;
-    transition: width 0.3s ease;
-  }
-  .btn-discover:hover .arrow { width: 32px; }
-
-  /* Navigation arrows */
-  .nav-arrows {
-    position: fixed;
-    bottom: 48px;
-    right: 48px;
-    z-index: 100;
-    display: flex;
-    gap: 12px;
-  }
-
-  .arrow-btn {
-    width: 48px;
-    height: 48px;
-    border: 1px solid rgba(201,168,76,0.3);
-    background: transparent;
-    color: var(--gold);
-    font-size: 18px;
-    cursor: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  .arrow-btn:hover {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.1);
-  }
-
-  /* Progress dots */
-  .progress-dots {
-    position: fixed;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    transition: all 0.3s ease;
-    cursor: none;
-  }
-  .dot.active {
-    width: 24px;
-    border-radius: 2px;
-    background: var(--gold);
-  }
-
-  /* Scroll hint */
-  .scroll-hint {
-    position: fixed;
-    bottom: 48px;
-    left: 80px;
-    z-index: 100;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .scroll-hint::before {
-    content: '';
-    width: 32px;
-    height: 1px;
-    background: var(--text-muted);
-  }
-
-  /* CREATOR PAGE */
-  .creator-page {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: var(--black);
-    transform: translateY(100%);
-    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
-    overflow-y: auto;
-  }
-
-  .creator-page.open {
-    transform: translateY(0);
-  }
-
-  .page-hero {
-    position: relative;
-    height: 85vh;
-    overflow: hidden;
-  }
-
-  .page-hero-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center top;
-    filter: brightness(0.4);
-    transform: scale(1.05);
-    transition: transform 8s ease;
-  }
-
-  .creator-page.open .page-hero-bg {
-    transform: scale(1);
-  }
-
-  .page-hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 300px;
-    background: linear-gradient(to top, var(--black), transparent);
-  }
-
-  .page-hero-content {
-    position: absolute;
-    bottom: 80px;
-    left: 80px;
-    z-index: 2;
-  }
-
-  .page-back {
-    position: fixed;
-    top: 32px;
-    left: 48px;
-    z-index: 210;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-transform: uppercase;
-    cursor: none;
-    background: none;
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    transition: opacity 0.3s;
-  }
-  .page-back:hover { opacity: 0.7; }
-  .page-back .line {
-    width: 24px;
-    height: 1px;
-    background: var(--gold);
-    transition: width 0.3s;
-  }
-  .page-back:hover .line { width: 12px; }
-
-  .page-creator-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(56px, 8vw, 100px);
-    font-weight: 300;
-    line-height: 0.9;
-    letter-spacing: 2px;
-  }
-
-  .page-creator-sub {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-top: 16px;
-    font-weight: 200;
-  }
-
-  .page-body {
-    padding: 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .page-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    margin-bottom: 80px;
-  }
-
-  .page-bio {
-    font-size: 14px;
-    line-height: 2;
-    color: rgba(245,240,234,0.7);
-    font-weight: 200;
-    letter-spacing: 0.5px;
-  }
-
-  .page-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    justify-content: center;
-  }
-
-  .stat-item {
-    border-left: 1px solid var(--gold);
-    padding-left: 24px;
-  }
-
-  .stat-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    color: var(--gold);
-  }
-
-  .stat-label {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-bottom: 64px;
-  }
-
-  .photo-thumb {
-    aspect-ratio: 3/4;
-    background: var(--gray);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .photo-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.8);
-    transition: all 0.5s ease;
-  }
-
-  .photo-thumb:hover img {
-    filter: brightness(1);
-    transform: scale(1.05);
-  }
-
-  .photo-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--gray) 0%, var(--gray-mid) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  .cta-section {
-    text-align: center;
-    padding: 64px 0;
-    border-top: 1px solid var(--gray-mid);
-  }
-
-  .cta-label {
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-
-  .cta-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    margin-bottom: 32px;
-    font-style: italic;
-  }
-
-  .btn-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 48px;
-    background: var(--gold);
-    color: var(--black);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 400;
-    transition: all 0.3s ease;
-    cursor: none;
-  }
-  .btn-cta:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-  }
-
-  .divider {
-    width: 40px;
-    height: 1px;
-    background: var(--black);
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
-    .logo { font-size: 22px; letter-spacing: 6px; }
-
-    .creator-slide .content {
-      bottom: 100px;
-      left: 24px;
-      right: 24px;
-      max-width: 100%;
-    }
-
-    .creator-name { font-size: 48px; }
-
-    .nav-arrows { bottom: 32px; right: 24px; }
-    .scroll-hint { display: none; }
-
-    /* Mobile: vertical scroll */
-    .carousel-container { overflow-y: auto; overflow-x: hidden; }
-    .carousel-track { flex-direction: column; transform: none !important; }
-    .creator-slide { min-width: 100vw; height: 100vh; }
-
-    .page-hero-content { left: 24px; bottom: 60px; }
-    .page-body { padding: 40px 24px; }
-    .page-grid { grid-template-columns: 1fr; gap: 40px; }
-    .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .page-back { left: 24px; }
-  }
-
-  /* Loading screen */
-  .loader {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: var(--black);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-  }
-  .loader.hide { opacity: 0; visibility: hidden; }
-
-  .loader-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-weight: 300;
-    letter-spacing: 12px;
-    text-transform: uppercase;
-    overflow: hidden;
-  }
-
-  .loader-logo span {
-    display: inline-block;
-    animation: slideUp 0.8s ease forwards;
-    opacity: 0;
-    transform: translateY(100%);
-  }
-
-  .loader-logo span:nth-child(1) { animation-delay: 0.1s; }
-  .loader-logo span:nth-child(2) { animation-delay: 0.2s; }
-  .loader-logo span:nth-child(3) { animation-delay: 0.3s; }
-  .loader-logo span:nth-child(4) { animation-delay: 0.4s; }
-  .loader-logo span:nth-child(5) { animation-delay: 0.5s; }
-
-  @keyframes slideUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .loader-line {
-    width: 0;
-    height: 1px;
-    background: var(--gold);
-    animation: expand 1.2s ease 0.8s forwards;
-  }
-
-  @keyframes expand {
-    to { width: 80px; }
-  }
-
-  .loader-text {
-    font-size: 9px;
-    letter-spacing: 4px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeIn 0.5s ease 1.5s forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  /* FOOTER */
-  .site-footer {
-    background: var(--black);
-    border-top: 1px solid var(--gray-mid);
-    padding: 48px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 24px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 300;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-  }
-  .footer-logo span { color: var(--gold); }
-
-  .footer-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .footer-link {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    cursor: none;
-    transition: color 0.3s;
-  }
-  .footer-link:hover { color: var(--gold); }
-
-  .footer-mail {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-  }
-  .footer-mail a {
-    color: var(--gold);
-    text-decoration: none;
-    transition: opacity 0.3s;
-    cursor: none;
-  }
-  .footer-mail a:hover { opacity: 0.7; }
-
-  .footer-disclaimer {
-    width: 100%;
-    font-size: 9px;
-    color: #444;
-    letter-spacing: 0.5px;
-    line-height: 1.8;
-    border-top: 1px solid #1a1a1a;
-    padding-top: 24px;
-    margin-top: 8px;
-  }
-
-  @media (max-width: 768px) {
-    .site-footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
-    .footer-links { flex-wrap: wrap; gap: 20px; }
-  }
-
-  /* DISCLOSURE PAGE */
-  .disclosure-page {
-    position: fixed;
-    inset: 0;
-    z-index: 250;
-    background: var(--black);
-    transform: translateY(100%);
-    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
-    overflow-y: auto;
-  }
-  .disclosure-page.open { transform: translateY(0); }
-
-  .disclosure-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 120px 48px 80px;
-  }
-
-  .disclosure-label {
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-
-  .disclosure-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 48px;
-  }
-
-  .disclosure-section {
-    margin-bottom: 40px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid var(--gray-mid);
-  }
-
-  .disclosure-section:last-of-type { border-bottom: none; }
-
-  .disclosure-section h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 300;
-    color: var(--gold);
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-  }
-
-  .disclosure-section p {
-    font-size: 13px;
-    line-height: 2;
-    color: rgba(245,240,234,0.6);
-    font-weight: 200;
-    letter-spacing: 0.3px;
-  }
-
-  .disclosure-section p strong {
-    color: var(--white);
-    font-weight: 400;
-  }
-
-  .disclosure-placeholder {
-    display: inline-block;
-    background: var(--gray-mid);
-    color: var(--gold);
-    font-size: 10px;
-    letter-spacing: 2px;
-    padding: 2px 8px;
-    border: 1px dashed var(--gold);
-    text-transform: uppercase;
-  }
-
-  .disclosure-updated {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: #444;
-    text-transform: uppercase;
-    margin-top: 48px;
-  }
-
-  @media (max-width: 768px) {
-    .disclosure-content { padding: 100px 24px 60px; }
-  }
-
-  /* AGE GATE */
-  .age-gate {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-  }
-  .age-gate.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-
-  .age-gate-inner {
-    text-align: center;
-    max-width: 480px;
-    padding: 48px;
-    border: 1px solid var(--gray-mid);
-    position: relative;
-  }
-
-  .age-gate-inner::before {
-    content: '18+';
-    position: absolute;
-    top: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 56px;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-    background: var(--black);
-    padding: 0 16px;
-  }
-
-  .age-gate h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-    margin-top: 16px;
-  }
-
-  .age-gate p {
-    font-size: 11px;
-    color: rgba(245, 240, 234, 0.85);
-    letter-spacing: 1px;
-    line-height: 1.8;
-    margin-bottom: 40px;
-    font-weight: 300;
-  }
-
-  .age-gate-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .age-btn-yes {
-    padding: 14px 40px;
-    background: var(--gold);
-    color: var(--black);
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    cursor: none;
-    transition: all 0.3s;
-    font-weight: 400;
-  }
-  .age-btn-yes:hover { background: var(--gold-light); }
-
-  .age-btn-no {
-    padding: 14px 40px;
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--gray-mid);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    cursor: none;
-    transition: all 0.3s;
-    font-weight: 300;
-  }
-  .age-btn-no:hover { border-color: var(--text-muted); }
-
-  .age-gate-disclaimer {
-    margin-top: 24px;
-    font-size: 9px;
-    color: rgba(245, 240, 234, 0.6);
-    letter-spacing: 1px;
-    line-height: 1.8;
-  }
-
-  /* Grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: -50%;
-    z-index: 300;
-    pointer-events: none;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 128px;
-  }
-</style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-17MZZZR4JN"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-17MZZZR4JN');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Asmya — Curated socks, tights and feminine aesthetic magazine. Style guides, outfit inspiration and trends.">
+  <title>ASMYA — Socks & Tights Aesthetic Magazine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--black:#080808;--white:#f5f0ea;--gold:#c9a84c;--gold-light:#e8d5a3;--gray:#1a1a1a;--gray-mid:#2a2a2a;--muted:#555;--muted-light:#888;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:4px;height:4px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s ease;}
+    .cursor-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(201,168,76,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,border-color 0.3s;}
+    .cursor-ring.hover{width:44px;height:44px;border-color:var(--gold);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 64px;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,8,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-mid);}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;letter-spacing:8px;color:var(--white);text-decoration:none;text-transform:uppercase;cursor:none;}
+    .logo span{color:var(--gold);}
+    .nav-links{display:flex;gap:32px;align-items:center;}
+    .nav-link{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;font-weight:300;}
+    .nav-link:hover{color:var(--gold);}
+    .age-gate{position:fixed;inset:0;z-index:2000;background:var(--black);display:flex;align-items:center;justify-content:center;transition:opacity 0.8s ease,visibility 0.8s ease;}
+    .age-gate.hide{opacity:0;visibility:hidden;pointer-events:none;}
+    .age-gate-inner{text-align:center;max-width:480px;padding:48px;border:1px solid var(--gray-mid);position:relative;}
+    .age-gate-inner::before{content:'18+';position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--gold);line-height:1;background:var(--black);padding:0 16px;}
+    .age-gate h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;letter-spacing:2px;margin-bottom:16px;margin-top:16px;}
+    .age-gate p{font-size:11px;color:rgba(245,240,234,0.85);letter-spacing:1px;line-height:1.8;margin-bottom:40px;font-weight:300;}
+    .age-gate-buttons{display:flex;gap:16px;justify-content:center;}
+    .age-btn-yes{padding:14px 40px;background:var(--gold);color:var(--black);border:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:none;transition:all 0.3s;font-weight:400;}
+    .age-btn-yes:hover{background:var(--gold-light);}
+    .age-btn-no{padding:14px 40px;background:transparent;color:var(--muted);border:1px solid var(--gray-mid);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:none;font-weight:300;}
+    .age-gate-disclaimer{margin-top:24px;font-size:9px;color:rgba(245,240,234,0.6);letter-spacing:1px;line-height:1.8;}
+    .hero{min-height:100vh;display:flex;align-items:center;padding:120px 120px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--gray-mid);}
+    .hero-bg-text{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:280px;font-weight:300;color:rgba(201,168,76,0.03);letter-spacing:16px;pointer-events:none;user-select:none;white-space:nowrap;}
+    .hero-content{position:relative;z-index:2;max-width:700px;}
+    .hero-tag{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px;font-weight:300;}
+    .hero-tag::before{content:'';width:32px;height:1px;background:var(--gold);}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,7vw,96px);font-weight:300;line-height:0.95;letter-spacing:-1px;margin-bottom:32px;}
+    .hero-title em{font-style:italic;color:var(--gold);}
+    .hero-sub{font-size:12px;line-height:2;color:var(--muted-light);font-weight:200;max-width:480px;margin-bottom:48px;}
+    .hero-cta{display:inline-flex;align-items:center;gap:16px;padding:14px 36px;border:1px solid var(--gold);color:var(--gold);font-size:10px;letter-spacing:4px;text-transform:uppercase;text-decoration:none;cursor:none;transition:all 0.3s;font-weight:300;}
+    .hero-cta:hover{background:var(--gold);color:var(--black);}
+    .ad-hero{position:absolute;bottom:32px;right:64px;width:300px;height:250px;background:var(--gray);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .ad-placeholder{font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+    .section{padding:80px 120px;border-bottom:1px solid var(--gray-mid);}
+    .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+    .section-tag{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;font-weight:300;margin-bottom:12px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.1;}
+    .section-title em{font-style:italic;color:var(--gold);}
+    .view-all{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;border-bottom:1px solid var(--gray-mid);padding-bottom:2px;font-weight:300;}
+    .view-all:hover{color:var(--gold);border-color:var(--gold);}
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-mid);}
+    .blog-card{background:var(--black);overflow:hidden;cursor:none;transition:background 0.3s;text-decoration:none;color:var(--white);display:block;}
+    .blog-card:hover{background:var(--gray);}
+    .blog-card-img-placeholder{width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .blog-card-img-placeholder img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8);transition:filter 0.4s,transform 0.4s;}
+    .blog-card:hover .blog-card-img-placeholder img{filter:brightness(1);transform:scale(1.03);}
+    .blog-card-body{padding:24px;}
+    .blog-card-cat{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:10px;}
+    .blog-card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;line-height:1.3;margin-bottom:12px;}
+    .blog-card-excerpt{font-size:10px;line-height:1.8;color:var(--muted-light);font-weight:200;margin-bottom:16px;}
+    .blog-card-meta{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:300;}
+    .ad-strip{padding:32px 120px;display:flex;justify-content:center;border-bottom:1px solid var(--gray-mid);background:var(--gray);}
+    .ad-leaderboard{width:728px;height:90px;background:var(--black);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--gray-mid);}
+    .category-card{background:var(--black);padding:40px 32px;cursor:none;transition:background 0.3s;text-decoration:none;color:var(--white);display:block;}
+    .category-card:hover{background:var(--gray);}
+    .category-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:16px;}
+    .category-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:8px;}
+    .category-count{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:300;}
+    .article-page{position:fixed;inset:0;z-index:200;background:var(--black);transform:translateY(100%);transition:transform 0.7s cubic-bezier(0.77,0,0.175,1);overflow-y:auto;}
+    .article-page.open{transform:translateY(0);}
+    .article-back{position:fixed;top:32px;left:48px;z-index:210;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;cursor:none;background:none;border:none;font-family:'Montserrat',sans-serif;font-weight:300;}
+    .article-back .line{width:24px;height:1px;background:var(--gold);}
+    .article-hero{height:60vh;position:relative;overflow:hidden;}
+    .article-hero-bg{width:100%;height:100%;background:linear-gradient(135deg,#0d0d0d,#1a1212);}
+    .article-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--black),transparent);}
+    .article-hero-content{position:absolute;bottom:48px;left:120px;z-index:2;max-width:700px;}
+    .article-cat{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:16px;}
+    .article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;line-height:1.1;}
+    .article-body{max-width:720px;margin:0 auto;padding:64px 24px 120px;}
+    .article-meta{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:300;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--gray-mid);}
+    .article-content{font-size:14px;line-height:2.1;color:rgba(245,240,234,0.8);font-weight:200;}
+    .article-content h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);margin:48px 0 20px;}
+    .article-content p{margin-bottom:24px;}
+    .ad-article{width:300px;height:250px;background:var(--gray);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;margin:40px auto;overflow:hidden;}
+    .loading-indicator{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;padding:48px;}
+    .loading-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);animation:pulse 1s infinite;}
+    .loading-dot:nth-child(2){animation-delay:0.2s;}
+    .loading-dot:nth-child(3){animation-delay:0.4s;}
+    @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+    footer{padding:48px 120px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;border-top:1px solid var(--gray-mid);}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:6px;text-transform:uppercase;}
+    .footer-logo span{color:var(--gold);}
+    .footer-links{display:flex;gap:32px;}
+    .footer-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;}
+    .footer-link:hover{color:var(--gold);}
+    .footer-copy{font-size:9px;color:var(--muted);letter-spacing:1px;width:100%;padding-top:24px;border-top:1px solid var(--gray-mid);}
+    body::before{content:'';position:fixed;inset:-50%;z-index:500;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:128px;}
+    @media(max-width:768px){nav{padding:18px 24px;}.nav-links{display:none;}.hero{padding:100px 24px 60px;}.ad-hero{display:none;}.section{padding:60px 24px;}.blog-grid{grid-template-columns:1fr;}.categories-grid{grid-template-columns:1fr 1fr;}.ad-strip{padding:24px;}.ad-leaderboard{width:320px;height:50px;}.article-hero-content{left:24px;bottom:32px;}.article-body{padding:40px 24px 80px;}footer{padding:40px 24px;flex-direction:column;align-items:flex-start;}}
+  </style>
 </head>
 <body>
 
-<!-- Age Gate -->
-<div class="age-gate" id="ageGate">
-  <div class="age-gate-inner">
-    <h2>Adults Only</h2>
-    <p>
-      This website contains content intended for adults only.<br>
-      By entering, you confirm that you are <strong style="color:var(--white);">18 years of age or older</strong><br>
-      and agree to our terms of use.
-    </p>
-    <div class="age-gate-buttons">
-      <button class="age-btn-yes" onclick="enterSite()">I am 18+</button>
-      <button class="age-btn-no" onclick="exitSite()">Exit</button>
-    </div>
-    <div class="age-gate-disclaimer">
-      By entering this site you agree that you are of legal age in your country.<br>
-      This site contains affiliate links. © 2026 ASMYA
-    </div>
-  </div>
-</div>
-
-<!-- Loader -->
-<div class="loader" id="loader">
-  <div class="loader-logo">
-    <span>A</span><span>S</span><span>M</span><span>Y</span><span>A</span>
-  </div>
-  <div class="loader-line"></div>
-  <div class="loader-text">Curated Creators</div>
-</div>
-
-<!-- Custom cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Nav -->
+<!-- AGE GATE -->
+<div class="age-gate" id="ageGate">
+  <div class="age-gate-inner">
+    <h2>Adults Only</h2>
+    <p>This website contains content intended for adults only.<br>By entering, you confirm that you are <strong style="color:var(--white);">18 years of age or older</strong><br>and agree to our terms of use.</p>
+    <div class="age-gate-buttons">
+      <button class="age-btn-yes" onclick="enterSite()">I am 18+</button>
+      <button class="age-btn-no" onclick="window.location.href='https://www.google.com'">Exit</button>
+    </div>
+    <div class="age-gate-disclaimer">By entering this site you agree that you are of legal age in your country.<br>This site may contain affiliate links and advertisements. © 2026 ASMYA</div>
+  </div>
+</div>
+
+<!-- NAV -->
 <nav>
-  <a href="#" class="logo" onclick="closeCreatorPage(); closeDisclosure(); return false;">ASM<span>Y</span>A</a>
-  <div style="display:flex;align-items:center;gap:24px;">
-    <a href="https://fr.pinterest.com/Asmya09/" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text-muted);font-size:10px;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;cursor:none;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--text-muted)'">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-      Pinterest
-    </a>
-    <div class="nav-right">Curated Creators</div>
+  <a href="#" class="logo" onclick="closeArticle();return false;">ASM<span>Y</span>A</a>
+  <div class="nav-links">
+    <a href="#latest" class="nav-link">Latest</a>
+    <a href="#categories" class="nav-link">Categories</a>
+    <a href="https://fr.pinterest.com/Asmya09/" target="_blank" class="nav-link">Pinterest</a>
+    <a href="mailto:asmya.contact@proton.me" class="nav-link">Contact</a>
   </div>
 </nav>
 
-<!-- Main Carousel -->
-<div class="carousel-container" id="carouselContainer">
-  <div class="carousel-track" id="carouselTrack">
-
-    <!-- COMING SOON 1 -->
-    <div class="creator-slide">
-      <div class="bg" style="background: linear-gradient(135deg, #0d0d0d 0%, #1a1212 50%, #0d0d0d 100%);"></div>
-      <div class="content">
-        <div class="creator-number">01 — Creator</div>
-        <div class="creator-name">Coming<br>Soon</div>
-        <div class="creator-tagline">New creator joining Asmya</div>
-        <span class="btn-discover" style="opacity:0.4;pointer-events:none;">
-          Stay tuned
-          <span class="arrow"></span>
-        </span>
-      </div>
-      <!-- Decorative elements -->
-      <div style="position:absolute;top:50%;right:80px;transform:translateY(-50%);z-index:2;text-align:right;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(201,168,76,0.06);letter-spacing:8px;line-height:1;">ASMYA</div>
-      </div>
-    </div>
-
-    <!-- COMING SOON 2 -->
-    <div class="creator-slide">
-      <div class="bg" style="background: linear-gradient(135deg, #0d0d0d 0%, #12121a 50%, #0d0d0d 100%);"></div>
-      <div class="content">
-        <div class="creator-number">02 — Creator</div>
-        <div class="creator-name">Coming<br>Soon</div>
-        <div class="creator-tagline">New creator joining Asmya</div>
-        <span class="btn-discover" style="opacity:0.4;pointer-events:none;">
-          Stay tuned
-          <span class="arrow"></span>
-        </span>
-      </div>
-      <div style="position:absolute;top:50%;right:80px;transform:translateY(-50%);z-index:2;text-align:right;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(201,168,76,0.06);letter-spacing:8px;line-height:1;">ASMYA</div>
-      </div>
-    </div>
-
-    <!-- COMING SOON 3 -->
-    <div class="creator-slide">
-      <div class="bg" style="background: linear-gradient(135deg, #0d0d0d 0%, #121a12 50%, #0d0d0d 100%);"></div>
-      <div class="content">
-        <div class="creator-number">03 — Creator</div>
-        <div class="creator-name">Coming<br>Soon</div>
-        <div class="creator-tagline">New creator joining Asmya</div>
-        <span class="btn-discover" style="opacity:0.4;pointer-events:none;">
-          Stay tuned
-          <span class="arrow"></span>
-        </span>
-      </div>
-      <div style="position:absolute;top:50%;right:80px;transform:translateY(-50%);z-index:2;text-align:right;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(201,168,76,0.06);letter-spacing:8px;line-height:1;">ASMYA</div>
-      </div>
-    </div>
-
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">ASMYA</div>
+  <div class="hero-content">
+    <div class="hero-tag">Curated Aesthetic Magazine</div>
+    <h1 class="hero-title">Socks, Tights<br>& <em>Feminine</em><br>Aesthetic.</h1>
+    <p class="hero-sub">Your curated destination for socks, tights and feminine aesthetic inspiration. Style guides, outfit ideas and the latest trends — all in one place.</p>
+    <a href="#latest" class="hero-cta">Explore the magazine <span style="width:20px;height:1px;background:currentColor;display:inline-block;"></span></a>
+  </div>
+  <!-- EXOCLICK AD 300x250 — Replace placeholder with your ExoClick code -->
+  <div class="ad-hero">
+    <!-- PASTE EXOCLICK 300x250 CODE HERE -->
+    <span class="ad-placeholder">Ad 300×250</span>
   </div>
 </div>
 
-<!-- Progress dots -->
-<div class="progress-dots" id="progressDots"></div>
-
-<!-- Nav arrows -->
-<div class="nav-arrows">
-  <button class="arrow-btn" onclick="prevSlide()">←</button>
-  <button class="arrow-btn" onclick="nextSlide()">→</button>
+<!-- AD STRIP -->
+<div class="ad-strip">
+  <div class="ad-leaderboard">
+    <!-- PASTE EXOCLICK 728x90 CODE HERE -->
+    <span class="ad-placeholder">Ad 728×90</span>
+  </div>
 </div>
 
-<!-- Scroll hint -->
-<div class="scroll-hint">Swipe to explore</div>
+<!-- LATEST POSTS -->
+<div class="section" id="latest">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Latest</div>
+      <h2 class="section-title">Fresh from the <em>magazine.</em></h2>
+    </div>
+    <a href="#" class="view-all" onclick="currentCategory=null;renderGrid(articles);return false;">View all</a>
+  </div>
+  <div id="blogGrid" class="blog-grid">
+    <div class="loading-indicator">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <span>Loading articles...</span>
+    </div>
+  </div>
+</div>
 
-<!-- DISCLOSURE PAGE -->
-<div class="disclosure-page" id="disclosurePage">
-  <button class="page-back" onclick="closeDisclosure()">
+<!-- AD STRIP 2 -->
+<div class="ad-strip">
+  <div class="ad-leaderboard">
+    <!-- PASTE EXOCLICK 728x90 CODE HERE -->
+    <span class="ad-placeholder">Ad 728×90</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="section" id="categories">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Browse</div>
+      <h2 class="section-title">Explore by <em>category.</em></h2>
+    </div>
+  </div>
+  <div class="categories-grid">
+    <a href="#latest" class="category-card" onclick="filterCategory('Style & Outfits');return false;">
+      <div class="category-num">01</div>
+      <div class="category-name">Style & Outfits</div>
+      <div class="category-count">Outfit inspiration</div>
+    </a>
+    <a href="#latest" class="category-card" onclick="filterCategory('Aesthetic & Trends');return false;">
+      <div class="category-num">02</div>
+      <div class="category-name">Aesthetic & Trends</div>
+      <div class="category-count">Latest trends</div>
+    </a>
+    <a href="#latest" class="category-card" onclick="filterCategory('Socks Guide');return false;">
+      <div class="category-num">03</div>
+      <div class="category-name">Socks Guide</div>
+      <div class="category-count">Socks & hosiery</div>
+    </a>
+    <a href="#latest" class="category-card" onclick="filterCategory('Tights & Fishnets');return false;">
+      <div class="category-num">04</div>
+      <div class="category-name">Tights & Fishnets</div>
+      <div class="category-count">Tights & collants</div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ASM<span>Y</span>A</div>
+  <div class="footer-links">
+    <a href="https://fr.pinterest.com/Asmya09/" target="_blank" class="footer-link">Pinterest</a>
+    <a href="mailto:asmya.contact@proton.me" class="footer-link">Contact</a>
+    <a href="#" class="footer-link" onclick="document.getElementById('disclosureOverlay').style.display='block';return false;">Disclosure</a>
+  </div>
+  <div class="footer-copy">© 2026 ASMYA — All rights reserved. This site may contain affiliate links and sponsored content.</div>
+</footer>
+
+<!-- ARTICLE PAGE -->
+<div class="article-page" id="articlePage">
+  <button class="article-back" onclick="closeArticle()">
     <span class="line"></span>
     Back
   </button>
-  <div class="disclosure-content">
-    <div class="disclosure-label">Legal</div>
-    <div class="disclosure-title">Affiliate<br>Disclosure</div>
-
-    <div class="disclosure-section">
-      <h3>Affiliate Relationships</h3>
-      <p>
-        This website, <strong>ASMYA</strong>, participates in affiliate marketing programs. 
-        This means that when you click on certain links on this site and make a purchase or subscribe to a service, 
-        we may receive a commission at <strong>no additional cost to you</strong>.
-      </p>
+  <div class="article-hero">
+    <div class="article-hero-bg" id="articleHeroBg"></div>
+    <div class="article-hero-content">
+      <div class="article-cat" id="articleCat"></div>
+      <div class="article-title" id="articleTitle"></div>
     </div>
-
-    <div class="disclosure-section">
-      <h3>How It Works</h3>
-      <p>
-        Each creator featured on this platform may be associated with an affiliate or referral program. 
-        When you access a creator's page through ASMYA and subscribe to their content, 
-        we may receive a referral fee from the platform or directly from the creator's program.
-        <br><br>
-        The commissions we receive help us maintain and grow this platform at no cost to our visitors.
-      </p>
+  </div>
+  <div class="article-body">
+    <div class="article-meta" id="articleMeta"></div>
+    <div class="ad-article">
+      <!-- PASTE EXOCLICK 300x250 CODE HERE -->
+      <span class="ad-placeholder">Ad 300×250</span>
     </div>
-
-    <div class="disclosure-section">
-      <h3>Our Commitment</h3>
-      <p>
-        We only feature creators we have personally vetted and partnered with. 
-        Affiliate relationships do not influence the way creators are presented on this platform. 
-        All partnerships are established independently and transparently.
-      </p>
+    <div class="article-content" id="articleContent"></div>
+    <div class="ad-article" style="margin-top:48px;">
+      <!-- PASTE EXOCLICK 300x250 CODE HERE -->
+      <span class="ad-placeholder">Ad 300×250</span>
     </div>
-
-    <div class="disclosure-section">
-      <h3>Partner Programs</h3>
-      <p>
-        ASMYA currently works with the following affiliate programs:<br><br>
-        <span class="disclosure-placeholder">— To be completed when partnerships are confirmed —</span>
-        <br><br>
-        Each program has its own terms and commission structure. 
-        For questions about a specific partnership, contact us directly.
-      </p>
-    </div>
-
-    <div class="disclosure-section">
-      <h3>Contact</h3>
-      <p>
-        For any questions regarding our affiliate relationships or this disclosure, 
-        please contact us at: <strong>asmya.contact@proton.me</strong>
-      </p>
-    </div>
-
-    <div class="disclosure-updated">Last updated — May 2026</div>
   </div>
 </div>
 
-<!-- CREATOR PAGE -->
-<div class="creator-page" id="creatorPage">
-  <button class="page-back" onclick="closeCreatorPage()">
-    <span class="line"></span>
-    Back
-  </button>
-
-  <div class="page-hero">
-    <div class="page-hero-bg" id="pageHeroBg"></div>
-    <div class="page-hero-content">
-      <div class="creator-number" id="pageNumber"></div>
-      <div class="page-creator-name" id="pageName"></div>
-      <div class="page-creator-sub" id="pageTagline"></div>
-    </div>
+<!-- DISCLOSURE -->
+<div id="disclosureOverlay" style="display:none;position:fixed;inset:0;background:var(--black);z-index:300;overflow-y:auto;padding:120px 120px;">
+  <button onclick="document.getElementById('disclosureOverlay').style.display='none'" style="position:fixed;top:32px;left:48px;background:none;border:none;color:var(--gold);font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:none;">← Back</button>
+  <div style="max-width:700px;margin:0 auto;">
+    <div style="font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;">Legal</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;margin-bottom:48px;">Affiliate &amp; Ad Disclosure</div>
+    <p style="font-size:13px;line-height:2;color:rgba(245,240,234,0.7);font-weight:200;margin-bottom:24px;">This website participates in affiliate marketing programs. When you click on certain links and make a purchase, we may receive a commission at no additional cost to you.</p>
+    <p style="font-size:13px;line-height:2;color:rgba(245,240,234,0.7);font-weight:200;margin-bottom:24px;">This site displays advertisements served by third-party ad networks. These advertisements help support the running and maintenance of this website.</p>
+    <p style="font-size:13px;line-height:2;color:rgba(245,240,234,0.7);font-weight:200;">For any questions: asmya.contact@proton.me</p>
   </div>
-
-  <div class="page-body">
-    <div class="page-grid">
-      <div class="page-bio" id="pageBio"></div>
-      <div class="page-stats" id="pageStats"></div>
-    </div>
-
-    <div class="photo-grid" id="pagePhotos"></div>
-
-    <div class="cta-section">
-      <div class="cta-label">Exclusive Content</div>
-      <div class="cta-name" id="pageCtaName"></div>
-      <a href="#" class="btn-cta" id="pageCtaBtn" target="_blank">
-        Access Content
-        <span class="divider"></span>
-        ↗
-      </a>
-    </div>
-  </div>
-
-  <!-- Footer inside creator page -->
-  <footer class="site-footer">
-    <div class="footer-logo">ASM<span>Y</span>A</div>
-    <div class="footer-links">
-      <a href="#" class="footer-link" onclick="closeCreatorPage(); return false;">Home</a>
-      <a href="#" class="footer-link" onclick="openDisclosure(); return false;">Affiliate Disclosure</a>
-    </div>
-    <div class="footer-mail">
-      Contact — <a href="mailto:asmya.contact@proton.me">asmya.contact@proton.me</a>
-    </div>
-    <div class="footer-disclaimer">
-      This page contains affiliate links. We may earn a commission when you subscribe to a creator through our links, at no additional cost to you. 
-      All creators featured on ASMYA are independently selected and vetted. © 2026 ASMYA. All rights reserved.
-    </div>
-  </footer>
 </div>
 
 <script>
-// ---- DATA ---- //
-// Add your creators here — replace placeholders with real data
-const creators = [
-  {
-    name: "Creator Name",
-    tagline: "Your tagline here",
-    bio: "Add a description of this creator here. A few sentences about their content, their style, and what makes them unique. This text will appear on their dedicated page.",
-    bg: "", // Add background image URL
-    link: "#", // Add Linktree URL
-    stats: [
-      { value: "—", label: "Followers" },
-      { value: "—", label: "Posts" },
-    ],
-    photos: ["", "", "", "", "", ""] // Add photo URLs
-  },
-  {
-    name: "Creator Name",
-    tagline: "Your tagline here",
-    bio: "Add a description of this creator here. A few sentences about their content, their style, and what makes them unique. This text will appear on their dedicated page.",
-    bg: "",
-    link: "#",
-    stats: [
-      { value: "—", label: "Followers" },
-      { value: "—", label: "Posts" },
-    ],
-    photos: ["", "", "", "", "", ""]
-  },
-  {
-    name: "Creator Name",
-    tagline: "Your tagline here",
-    bio: "Add a description of this creator here. A few sentences about their content, their style, and what makes them unique. This text will appear on their dedicated page.",
-    bg: "",
-    link: "#",
-    stats: [
-      { value: "—", label: "Followers" },
-      { value: "—", label: "Posts" },
-    ],
-    photos: ["", "", "", "", "", ""]
-  }
+// AGE GATE
+function enterSite(){
+  document.getElementById('ageGate').classList.add('hide');
+  sessionStorage.setItem('ageVerified','true');
+  loadArticles();
+}
+if(sessionStorage.getItem('ageVerified')){
+  document.getElementById('ageGate').classList.add('hide');
+  loadArticles();
+}
+
+// ARTICLE
+let articles=[];
+let currentCategory=null;
+
+function openArticle(a){
+  document.getElementById('articleCat').textContent=a.category;
+  document.getElementById('articleTitle').textContent=a.title;
+  document.getElementById('articleMeta').textContent=a.date+' — '+a.readTime+' min read';
+  document.getElementById('articleContent').innerHTML=a.content;
+  document.getElementById('articlePage').classList.add('open');
+  document.body.style.overflow='auto';
+  window.scrollTo(0,0);
+}
+function closeArticle(){
+  document.getElementById('articlePage').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// TOPICS
+const topics=[
+  {title:"How to Style White Crew Socks",category:"Style & Outfits",kw:"white crew socks outfit ideas soft girl aesthetic"},
+  {title:"Fishnet Tights: The Ultimate Style Guide",category:"Tights & Fishnets",kw:"fishnet tights edgy dark feminine aesthetic"},
+  {title:"Soft Girl Aesthetic: Complete 2026 Guide",category:"Aesthetic & Trends",kw:"soft girl aesthetic pastel feminine vibes"},
+  {title:"Best Socks to Wear with Platform Shoes",category:"Socks Guide",kw:"platform shoes crew socks aesthetic outfits"},
+  {title:"Sheer Tights: Elegant Feminine Looks",category:"Tights & Fishnets",kw:"sheer tights elegant feminine style"},
+  {title:"Dark Feminine Aesthetic: Key Pieces",category:"Aesthetic & Trends",kw:"dark feminine moody aesthetic tights socks"},
+  {title:"Thigh High Socks: How to Wear Them",category:"Socks Guide",kw:"thigh high socks cute aesthetic"},
+  {title:"Clean Girl Aesthetic Wardrobe Essentials",category:"Aesthetic & Trends",kw:"clean girl minimal aesthetic white socks"},
+  {title:"Socks & Sneakers: Perfect Combinations",category:"Style & Outfits",kw:"socks sneakers casual streetwear aesthetic"},
+  {title:"Black Tights: 5 Ways to Style Them",category:"Tights & Fishnets",kw:"black tights versatile outfit ideas"},
+  {title:"Cozy Aesthetic: Socks & Warm Outfits",category:"Style & Outfits",kw:"cozy aesthetic warm socks autumn winter"},
+  {title:"Ballet Core: Tights and Delicate Looks",category:"Tights & Fishnets",kw:"ballet core pink tights feminine elegant"},
+  {title:"Knee High Socks: Style Inspiration",category:"Socks Guide",kw:"knee high socks preppy aesthetic cute"},
+  {title:"Pinterest Aesthetic Trends 2026",category:"Aesthetic & Trends",kw:"pinterest trends aesthetic 2026 feminine"},
+  {title:"Lace Socks: Vintage Feminine Vibes",category:"Socks Guide",kw:"lace socks vintage cottagecore feminine"},
 ];
 
-// ---- CAROUSEL ---- //
-let current = 0;
-let isAnimating = false;
-const track = document.getElementById('carouselTrack');
-const isMobile = () => window.innerWidth <= 768;
+async function generateArticle(topic){
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"claude-sonnet-4-6",
+      max_tokens:1000,
+      messages:[{role:"user",content:`Write a short fashion/aesthetic blog article for Asmya magazine.
+Topic: "${topic.title}"
+Keywords: ${topic.kw}
+Category: ${topic.category}
 
-function buildDots() {
-  const dots = document.getElementById('progressDots');
-  dots.innerHTML = '';
-  creators.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dots.appendChild(d);
+Return ONLY a JSON object with these exact fields, no markdown:
+{"intro":"2-3 engaging sentences","sections":[{"heading":"section title","text":"2-3 sentences"},{"heading":"section title","text":"2-3 sentences"},{"heading":"section title","text":"2-3 sentences"}],"conclusion":"1-2 sentences"}
+
+Tone: feminine, aesthetic, inspirational. English only.`}]
+    })
+  });
+  const data=await res.json();
+  const text=data.content[0].text.replace(/```json|```/g,'').trim();
+  return JSON.parse(text);
+}
+
+function formatContent(g){
+  let h='<p>'+g.intro+'</p>';
+  g.sections.forEach(s=>{h+='<h2>'+s.heading+'</h2><p>'+s.text+'</p>';});
+  h+='<p>'+g.conclusion+'</p>';
+  return h;
+}
+
+function getDate(daysAgo){
+  const d=new Date();
+  d.setDate(d.getDate()-daysAgo);
+  return d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+}
+
+async function loadArticles(){
+  const cached=sessionStorage.getItem('asmya_v2');
+  if(cached){articles=JSON.parse(cached);renderGrid(articles);return;}
+  for(let i=0;i<6;i++){
+    try{
+      const g=await generateArticle(topics[i]);
+      articles.push({id:i,title:topics[i].title,category:topics[i].category,excerpt:g.intro.substring(0,120)+'...',content:formatContent(g),date:getDate(i),readTime:Math.floor(Math.random()*3)+3});
+      renderGrid(articles);
+    }catch(e){console.error(e);}
+  }
+  sessionStorage.setItem('asmya_v2',JSON.stringify(articles));
+}
+
+function renderGrid(arts){
+  const grid=document.getElementById('blogGrid');
+  const list=currentCategory?arts.filter(a=>a.category===currentCategory):arts;
+  if(!list.length){grid.innerHTML='<div class="loading-indicator"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div><span>Loading...</span></div>';return;}
+  grid.innerHTML=list.map(a=>`
+    <a class="blog-card" href="#" onclick="openArticle(articles.find(x=>x.id===${a.id}));return false;">
+      <div class="blog-card-img-placeholder"></div>
+      <div class="blog-card-body">
+        <div class="blog-card-cat">${a.category}</div>
+        <div class="blog-card-title">${a.title}</div>
+        <div class="blog-card-excerpt">${a.excerpt}</div>
+        <div class="blog-card-meta">${a.date} — ${a.readTime} min read</div>
+      </div>
+    </a>`).join('');
+  document.querySelectorAll('.blog-card,.category-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
   });
 }
 
-function updateDots() {
-  document.querySelectorAll('.dot').forEach((d, i) => {
-    d.classList.toggle('active', i === current);
-  });
+function filterCategory(cat){
+  currentCategory=currentCategory===cat?null:cat;
+  renderGrid(articles);
+  document.getElementById('latest').scrollIntoView({behavior:'smooth'});
 }
 
-function goTo(index) {
-  if (isAnimating) return;
-  isAnimating = true;
-  current = ((index % creators.length) + creators.length) % creators.length;
-  if (!isMobile()) {
-    track.style.transition = 'transform 1s cubic-bezier(0.645, 0.045, 0.355, 1.000)';
-    track.style.transform = `translateX(-${current * 100}vw)`;
-  } else {
-    track.style.transition = 'transform 1s cubic-bezier(0.645, 0.045, 0.355, 1.000)';
-    track.style.transform = `translateY(-${current * 100}vh)`;
-  }
-  updateDots();
-  setTimeout(() => isAnimating = false, 1000);
-}
-
-function nextSlide() { goTo(current + 1); }
-function prevSlide() { goTo(current - 1); }
-
-// Touch/swipe
-let touchStartX = 0, touchStartY = 0;
-document.getElementById('carouselContainer').addEventListener('touchstart', e => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-});
-document.getElementById('carouselContainer').addEventListener('touchend', e => {
-  const dx = touchStartX - e.changedTouches[0].clientX;
-  const dy = touchStartY - e.changedTouches[0].clientY;
-  if (isMobile()) {
-    if (Math.abs(dy) > 50) dy > 0 ? nextSlide() : prevSlide();
-  } else {
-    if (Math.abs(dx) > 50) dx > 0 ? nextSlide() : prevSlide();
-  }
-});
-
-// Keyboard
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
-  if (e.key === 'Escape') closeCreatorPage();
-});
-
-// Wheel
-let wheelTimeout;
-document.getElementById('carouselContainer').addEventListener('wheel', e => {
-  e.preventDefault();
-  clearTimeout(wheelTimeout);
-  wheelTimeout = setTimeout(() => {
-    e.deltaY > 0 || e.deltaX > 0 ? nextSlide() : prevSlide();
-  }, 50);
-}, { passive: false });
-
-// ---- CREATOR PAGE ---- //
-function openCreator(index) {
-  const c = creators[index];
-  const page = document.getElementById('creatorPage');
-
-  document.getElementById('pageNumber').textContent = `0${index + 1} — Creator`;
-  document.getElementById('pageName').textContent = c.name;
-  document.getElementById('pageTagline').textContent = c.tagline;
-  document.getElementById('pageHeroBg').style.backgroundImage = c.bg ? `url(${c.bg})` : 'linear-gradient(135deg, #1a1a1a, #2a2a2a)';
-  document.getElementById('pageBio').textContent = c.bio;
-  document.getElementById('pageCtaName').textContent = c.name;
-  document.getElementById('pageCtaBtn').href = c.link;
-
-  // Stats
-  const statsEl = document.getElementById('pageStats');
-  statsEl.innerHTML = c.stats.map(s => `
-    <div class="stat-item">
-      <div class="stat-value">${s.value}</div>
-      <div class="stat-label">${s.label}</div>
-    </div>
-  `).join('');
-
-  // Photos
-  const photosEl = document.getElementById('pagePhotos');
-  photosEl.innerHTML = c.photos.map(p => `
-    <div class="photo-thumb">
-      ${p ? `<img src="${p}" alt="" loading="lazy">` : '<div class="photo-placeholder">Photo</div>'}
-    </div>
-  `).join('');
-
-  page.classList.add('open');
-  document.body.style.overflow = 'auto';
-}
-
-function closeCreatorPage() {
-  document.getElementById('creatorPage').classList.remove('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function openDisclosure() {
-  document.getElementById('disclosurePage').classList.add('open');
-  document.body.style.overflow = 'auto';
-}
-
-function closeDisclosure() {
-  document.getElementById('disclosurePage').classList.remove('open');
-  document.body.style.overflow = 'hidden';
-}
-
-// ---- CURSOR ---- //
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-});
-
-function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top = ry + 'px';
-  requestAnimationFrame(animRing);
-}
+// CURSOR
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
 animRing();
-
-document.querySelectorAll('a, button, .creator-slide').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.classList.add('hover'); cursor.style.transform = 'translate(-50%, -50%) scale(2)'; });
-  el.addEventListener('mouseleave', () => { ring.classList.remove('hover'); cursor.style.transform = 'translate(-50%, -50%) scale(1)'; });
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
 });
-
-// ---- AGE GATE ---- //
-function enterSite() {
-  document.getElementById('ageGate').classList.add('hide');
-  sessionStorage.setItem('ageVerified', 'true');
-}
-
-function exitSite() {
-  window.location.href = 'https://www.google.com';
-}
-
-// Check if already verified this session
-if (sessionStorage.getItem('ageVerified')) {
-  document.getElementById('ageGate').classList.add('hide');
-}
-
-// ---- INIT ---- //
-buildDots();
-
-setTimeout(() => {
-  document.getElementById('loader').classList.add('hide');
-}, 2200);
 </script>
 </body>
 </html>
