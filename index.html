@@ -300,72 +300,65 @@ function closeArticle(){
   document.body.style.overflow='';
 }
 
-// TOPICS
-const topics=[
-  {title:"How to Style White Crew Socks",category:"Style & Outfits",kw:"white crew socks outfit ideas soft girl aesthetic"},
-  {title:"Fishnet Tights: The Ultimate Style Guide",category:"Tights & Fishnets",kw:"fishnet tights edgy dark feminine aesthetic"},
-  {title:"Soft Girl Aesthetic: Complete 2026 Guide",category:"Aesthetic & Trends",kw:"soft girl aesthetic pastel feminine vibes"},
-  {title:"Best Socks to Wear with Platform Shoes",category:"Socks Guide",kw:"platform shoes crew socks aesthetic outfits"},
-  {title:"Sheer Tights: Elegant Feminine Looks",category:"Tights & Fishnets",kw:"sheer tights elegant feminine style"},
-  {title:"Dark Feminine Aesthetic: Key Pieces",category:"Aesthetic & Trends",kw:"dark feminine moody aesthetic tights socks"},
-  {title:"Thigh High Socks: How to Wear Them",category:"Socks Guide",kw:"thigh high socks cute aesthetic"},
-  {title:"Clean Girl Aesthetic Wardrobe Essentials",category:"Aesthetic & Trends",kw:"clean girl minimal aesthetic white socks"},
-  {title:"Socks & Sneakers: Perfect Combinations",category:"Style & Outfits",kw:"socks sneakers casual streetwear aesthetic"},
-  {title:"Black Tights: 5 Ways to Style Them",category:"Tights & Fishnets",kw:"black tights versatile outfit ideas"},
-  {title:"Cozy Aesthetic: Socks & Warm Outfits",category:"Style & Outfits",kw:"cozy aesthetic warm socks autumn winter"},
-  {title:"Ballet Core: Tights and Delicate Looks",category:"Tights & Fishnets",kw:"ballet core pink tights feminine elegant"},
-  {title:"Knee High Socks: Style Inspiration",category:"Socks Guide",kw:"knee high socks preppy aesthetic cute"},
-  {title:"Pinterest Aesthetic Trends 2026",category:"Aesthetic & Trends",kw:"pinterest trends aesthetic 2026 feminine"},
-  {title:"Lace Socks: Vintage Feminine Vibes",category:"Socks Guide",kw:"lace socks vintage cottagecore feminine"},
-];
-
-async function generateArticle(topic){
-  const res=await fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      model:"claude-sonnet-4-6",
-      max_tokens:1000,
-      messages:[{role:"user",content:`Write a short fashion/aesthetic blog article for Asmya magazine.
-Topic: "${topic.title}"
-Keywords: ${topic.kw}
-Category: ${topic.category}
-
-Return ONLY a JSON object with these exact fields, no markdown:
-{"intro":"2-3 engaging sentences","sections":[{"heading":"section title","text":"2-3 sentences"},{"heading":"section title","text":"2-3 sentences"},{"heading":"section title","text":"2-3 sentences"}],"conclusion":"1-2 sentences"}
-
-Tone: feminine, aesthetic, inspirational. English only.`}]
-    })
-  });
-  const data=await res.json();
-  const text=data.content[0].text.replace(/```json|```/g,'').trim();
-  return JSON.parse(text);
-}
-
-function formatContent(g){
-  let h='<p>'+g.intro+'</p>';
-  g.sections.forEach(s=>{h+='<h2>'+s.heading+'</h2><p>'+s.text+'</p>';});
-  h+='<p>'+g.conclusion+'</p>';
-  return h;
-}
-
-function getDate(daysAgo){
-  const d=new Date();
-  d.setDate(d.getDate()-daysAgo);
-  return d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-}
-
-async function loadArticles(){
-  const cached=sessionStorage.getItem('asmya_v2');
-  if(cached){articles=JSON.parse(cached);renderGrid(articles);return;}
-  for(let i=0;i<6;i++){
-    try{
-      const g=await generateArticle(topics[i]);
-      articles.push({id:i,title:topics[i].title,category:topics[i].category,excerpt:g.intro.substring(0,120)+'...',content:formatContent(g),date:getDate(i),readTime:Math.floor(Math.random()*3)+3});
-      renderGrid(articles);
-    }catch(e){console.error(e);}
-  }
-  sessionStorage.setItem('asmya_v2',JSON.stringify(articles));
+// HARDCODED ARTICLES
+function loadArticles(){
+  articles = [
+    {
+      id: 0,
+      title: "How to Style White Crew Socks",
+      category: "Style & Outfits",
+      excerpt: "White crew socks are the ultimate soft girl staple — here's how to wear them with everything from platform shoes to mini skirts.",
+      date: "June 13, 2026",
+      readTime: 4,
+      content: "<p>White crew socks have become the defining accessory of the soft girl and clean girl aesthetics. Simple, versatile, and endlessly charming — they elevate any outfit effortlessly.</p><h2>With Platform Shoes</h2><p>Pair your white crew socks with chunky platform shoes or Mary Janes for that quintessential Y2K-inspired look. Let the socks fold slightly over the shoe for maximum cuteness. This combination works beautifully with mini skirts or plaid trousers.</p><h2>With Sneakers</h2><p>The classic white sock and sneaker duo never goes out of style. Opt for slightly longer crew socks that peek above the ankle — this small detail adds a playful touch to even the most minimal outfit. New Balance or vintage-inspired trainers pair especially well.</p><h2>With Boots</h2><p>Tuck your crew socks into ankle boots and let just a hint of white peek out at the top. This unexpected combination feels both cozy and fashion-forward — perfect for autumn walks or casual days out.</p><p>White crew socks are proof that the smallest details make the biggest difference. Add a pair to your wardrobe and watch your outfits transform.</p>"
+    },
+    {
+      id: 1,
+      title: "Fishnet Tights: The Ultimate Style Guide",
+      category: "Tights & Fishnets",
+      excerpt: "From edgy to elegant — fishnet tights are the most versatile piece in your wardrobe. Here is everything you need to know.",
+      date: "June 12, 2026",
+      readTime: 5,
+      content: "<p>Fishnet tights have transcended their rebellious roots to become a mainstream fashion staple. Whether you lean dark feminine or soft aesthetic, there is a way to wear them that feels entirely yours.</p><h2>The Classic Dark Look</h2><p>Black fishnet tights paired with a slip dress, platform boots, and a leather jacket create that iconic dark feminine aesthetic. The contrast between delicate fishnet and bold outerwear is visually striking — effortlessly cool without trying too hard.</p><h2>The Soft Feminine Approach</h2><p>Not all fishnet looks need to be edgy. Try white or nude fishnets under a floral mini dress with ballet flats for a surprisingly delicate combination. The texture adds dimension without overpowering the sweetness of the look.</p><h2>Layering Techniques</h2><p>One of the best tricks with fishnet tights is layering — wear them over opaque tights or under ripped jeans for a peek-a-boo effect. This technique adds depth and interest to otherwise simple outfits.</p><p>Fishnet tights are one of those rare pieces that genuinely work for every aesthetic. Invest in a few pairs — they will become some of the most-reached-for items in your drawer.</p>"
+    },
+    {
+      id: 2,
+      title: "Soft Girl Aesthetic: Complete 2026 Guide",
+      category: "Aesthetic & Trends",
+      excerpt: "The soft girl aesthetic continues to evolve in 2026. Here is your complete guide to nailing this dreamy, feminine look.",
+      date: "June 11, 2026",
+      readTime: 5,
+      content: "<p>The soft girl aesthetic is more than just an outfit — it is a mood, a feeling, a gentle declaration of femininity. In 2026, the look has evolved into something even more nuanced and personal.</p><h2>Key Wardrobe Pieces</h2><p>Think oversized cardigans in muted pinks and creams, slip skirts in satin or silk, and of course — the essential white or pastel crew socks. Bows, hair clips, and delicate jewelry complete the picture. Every piece should feel soft to the touch and easy on the eye.</p><h2>The Role of Socks and Tights</h2><p>In the soft girl universe, socks are not an afterthought — they are a statement. White lace-trimmed socks, pastel knee-highs, and sheer tights with subtle patterns all contribute to the dreamy quality of the aesthetic. The goal is to look as though you stepped out of a vintage photograph.</p><h2>Color Palette</h2><p>Stick to dusty roses, warm creams, soft lavenders, and muted sage greens. Avoid anything too saturated or bold — the beauty of this aesthetic lies in its gentleness. When in doubt, choose the softer version of any color.</p><p>The soft girl aesthetic is ultimately about embracing a quieter, more tender version of yourself. Let your wardrobe reflect that softness.</p>"
+    },
+    {
+      id: 3,
+      title: "Sheer Tights: Elegant Feminine Looks",
+      category: "Tights & Fishnets",
+      excerpt: "Sheer tights are the most elegant hosiery option — timeless, versatile, and endlessly sophisticated. Here is how to wear them.",
+      date: "June 10, 2026",
+      readTime: 4,
+      content: "<p>There is something undeniably sophisticated about sheer tights. They have graced the legs of fashion icons for decades, and in 2026, they feel more relevant than ever.</p><h2>The Classic Office Look</h2><p>Sheer nude tights with a midi skirt and pointed-toe heels remain the gold standard of professional elegance. The sheerness elongates the leg while maintaining a polished, put-together appearance. Choose a shade that closely matches your skin tone for the most seamless effect.</p><h2>The Evening Aesthetic</h2><p>For evenings out, opt for sheer black tights with a bodycon dress or a tailored blazer outfit. The slight transparency adds a layer of intrigue — revealing just enough to feel alluring without being overt. Pair with strappy heels for maximum impact.</p><h2>Unexpected Pairings</h2><p>Sheer tights work surprisingly well with more casual pieces too. Try them under denim shorts with loafers, or beneath a graphic tee tucked into a mini skirt. The contrast between the delicacy of the tights and the casualness of the outfit creates an interesting tension that feels very current.</p><p>Sheer tights are the definition of quiet luxury — understated, refined, and eternally chic.</p>"
+    },
+    {
+      id: 4,
+      title: "Dark Feminine Aesthetic: Key Pieces",
+      category: "Aesthetic & Trends",
+      excerpt: "The dark feminine aesthetic is powerful, mysterious, and deeply intentional. Here are the key pieces to build your wardrobe.",
+      date: "June 9, 2026",
+      readTime: 5,
+      content: "<p>The dark feminine aesthetic is not about darkness for its own sake — it is about owning your power, your mystery, and your depth. It is femininity without apology, strength without harshness.</p><h2>The Foundation: Black Tights and Fishnets</h2><p>No dark feminine wardrobe is complete without an arsenal of black tights and fishnet styles. These pieces form the foundation of every look — grounding outfits in depth and texture while maintaining that essential feminine quality. Invest in quality; sheer black tights in particular should be a staple.</p><h2>Velvet, Satin, and Lace</h2><p>The dark feminine aesthetic lives in luxurious textures. Velvet midi skirts, satin slip dresses, and lace-trimmed pieces create that opulent, slightly gothic quality that defines the look. These textures catch light beautifully and give even simple outfits a sense of occasion.</p><h2>Accessories and Details</h2><p>Sterling silver jewelry, dark florals, and deep burgundy or forest green accents add dimension without breaking the dark palette. A pair of knee-high boots or strappy heels completes almost any dark feminine look with effortless authority.</p><p>The dark feminine aesthetic rewards those who commit to it fully. When every piece is chosen with intention, the result is an aesthetic that feels truly powerful.</p>"
+    },
+    {
+      id: 5,
+      title: "Knee High Socks: Style Inspiration",
+      category: "Socks Guide",
+      excerpt: "Knee high socks are having a major moment in 2026. Here is everything you need to know about styling them beautifully.",
+      date: "June 8, 2026",
+      readTime: 4,
+      content: "<p>Knee high socks have been a fashion fixture for decades, but in 2026 they have taken on new life — appearing everywhere from street style to high fashion editorials.</p><h2>The Preppy Classic</h2><p>White or navy knee high socks with a pleated mini skirt and loafers create that timeless preppy aesthetic that never goes out of style. The look is polished yet playful — a perfect balance that works for everything from college campuses to weekend brunches.</p><h2>The Cozy Aesthetic</h2><p>Thick knit knee high socks worn over leggings or under an oversized sweater dress create the ultimate cozy aesthetic. Choose heathered grays, warm creams, or dusty pinks for a palette that feels genuinely soft and inviting. This is the kind of outfit made for autumn days and warm beverages.</p><h2>The Fashion-Forward Approach</h2><p>For a more directional look, try mismatched knee high socks in complementary colors, or opt for styles with subtle patterns — stripes, small florals, or delicate ribbing. Pair with platform boots or chunky sneakers for a look that feels very current without being inaccessible.</p><p>Knee high socks are one of those accessories that add instant personality to any outfit. Do not underestimate their power.</p>"
+    }
+  ];
+  renderGrid(articles);
 }
 
 function renderGrid(arts){
