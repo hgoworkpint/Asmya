@@ -5,7 +5,7 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-17MZZZR4JN');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Asmya — Curated socks, tights and feminine aesthetic magazine. Style guides, outfit inspiration and trends.">
+  <meta name="description" content="Asmya — Curated socks, tights and feminine aesthetic magazine.">
   <title>ASMYA — Socks & Tights Aesthetic Magazine</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -22,6 +22,8 @@
     .nav-links{display:flex;gap:32px;align-items:center;}
     .nav-link{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;font-weight:300;}
     .nav-link:hover{color:var(--gold);}
+
+    /* AGE GATE */
     .age-gate{position:fixed;inset:0;z-index:2000;background:var(--black);display:flex;align-items:center;justify-content:center;transition:opacity 0.8s ease,visibility 0.8s ease;}
     .age-gate.hide{opacity:0;visibility:hidden;pointer-events:none;}
     .age-gate-inner{text-align:center;max-width:480px;padding:48px;border:1px solid var(--gray-mid);position:relative;}
@@ -33,74 +35,104 @@
     .age-btn-yes:hover{background:var(--gold-light);}
     .age-btn-no{padding:14px 40px;background:transparent;color:var(--muted);border:1px solid var(--gray-mid);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:none;font-weight:300;}
     .age-gate-disclaimer{margin-top:24px;font-size:9px;color:rgba(245,240,234,0.6);letter-spacing:1px;line-height:1.8;}
-    .hero{min-height:100vh;display:flex;align-items:center;padding:120px 120px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--gray-mid);}
-    .hero-bg-text{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:280px;font-weight:300;color:rgba(201,168,76,0.03);letter-spacing:16px;pointer-events:none;user-select:none;white-space:nowrap;}
-    .hero-content{position:relative;z-index:2;max-width:700px;}
+
+    /* LAYOUT WITH SIDEBARS */
+    .page-wrapper{display:grid;grid-template-columns:160px 1fr 160px;gap:0;min-height:100vh;}
+    .sidebar{position:sticky;top:80px;height:calc(100vh - 80px);display:flex;flex-direction:column;gap:16px;padding:16px 8px;align-items:center;}
+    .sidebar-ad{overflow:hidden;background:var(--gray);border:1px solid var(--gray-mid);}
+    .sidebar-ad-160{width:160px;height:600px;}
+    .sidebar-ad-300{width:160px;height:500px;}
+    .main-content{min-width:0;}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:120px 80px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--gray-mid);}
+    .hero-bg-text{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:220px;font-weight:300;color:rgba(201,168,76,0.03);letter-spacing:16px;pointer-events:none;user-select:none;white-space:nowrap;}
+    .hero-content{position:relative;z-index:2;max-width:600px;}
     .hero-tag{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px;font-weight:300;}
     .hero-tag::before{content:'';width:32px;height:1px;background:var(--gold);}
-    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,7vw,96px);font-weight:300;line-height:0.95;letter-spacing:-1px;margin-bottom:32px;}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,88px);font-weight:300;line-height:0.95;letter-spacing:-1px;margin-bottom:32px;}
     .hero-title em{font-style:italic;color:var(--gold);}
-    .hero-sub{font-size:12px;line-height:2;color:var(--muted-light);font-weight:200;max-width:480px;margin-bottom:48px;}
+    .hero-sub{font-size:12px;line-height:2;color:var(--muted-light);font-weight:200;max-width:440px;margin-bottom:48px;}
     .hero-cta{display:inline-flex;align-items:center;gap:16px;padding:14px 36px;border:1px solid var(--gold);color:var(--gold);font-size:10px;letter-spacing:4px;text-transform:uppercase;text-decoration:none;cursor:none;transition:all 0.3s;font-weight:300;}
     .hero-cta:hover{background:var(--gold);color:var(--black);}
-    .ad-hero{position:absolute;bottom:32px;right:64px;width:300px;height:250px;background:var(--gray);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-    .ad-placeholder{font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
-    .section{padding:80px 120px;border-bottom:1px solid var(--gray-mid);}
+    .ad-hero{position:absolute;bottom:32px;right:48px;width:300px;height:250px;overflow:hidden;}
+
+    /* SECTIONS */
+    .section{padding:80px 80px;border-bottom:1px solid var(--gray-mid);}
     .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
     .section-tag{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;font-weight:300;margin-bottom:12px;}
-    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.1;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,48px);font-weight:300;line-height:1.1;}
     .section-title em{font-style:italic;color:var(--gold);}
     .view-all{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;border-bottom:1px solid var(--gray-mid);padding-bottom:2px;font-weight:300;}
     .view-all:hover{color:var(--gold);border-color:var(--gold);}
+
+    /* BLOG GRID */
     .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-mid);}
     .blog-card{background:var(--black);overflow:hidden;cursor:none;transition:background 0.3s;text-decoration:none;color:var(--white);display:block;}
     .blog-card:hover{background:var(--gray);}
-    .blog-card-img-placeholder{width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-    .blog-card-img-placeholder img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8);transition:filter 0.4s,transform 0.4s;}
-    .blog-card:hover .blog-card-img-placeholder img{filter:brightness(1);transform:scale(1.03);}
+    .blog-card-img{width:100%;aspect-ratio:3/2;object-fit:cover;filter:brightness(0.8);transition:filter 0.4s,transform 0.4s;display:block;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);}
+    .blog-card:hover .blog-card-img{filter:brightness(1);transform:scale(1.03);}
     .blog-card-body{padding:24px;}
     .blog-card-cat{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:10px;}
     .blog-card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;line-height:1.3;margin-bottom:12px;}
     .blog-card-excerpt{font-size:10px;line-height:1.8;color:var(--muted-light);font-weight:200;margin-bottom:16px;}
     .blog-card-meta{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:300;}
-    .ad-strip{padding:32px 120px;display:flex;justify-content:center;border-bottom:1px solid var(--gray-mid);background:var(--gray);}
-    .ad-leaderboard{width:728px;height:90px;background:var(--black);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+
+    /* AD STRIP */
+    .ad-strip{padding:32px 80px;display:flex;justify-content:center;border-bottom:1px solid var(--gray-mid);background:var(--gray);}
+    .ad-leaderboard{width:728px;height:90px;overflow:hidden;}
+
+    /* CATEGORIES */
     .categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--gray-mid);}
     .category-card{background:var(--black);padding:40px 32px;cursor:none;transition:background 0.3s;text-decoration:none;color:var(--white);display:block;}
     .category-card:hover{background:var(--gray);}
     .category-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:16px;}
     .category-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:8px;}
     .category-count{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:300;}
+
+    /* ARTICLE PAGE */
     .article-page{position:fixed;inset:0;z-index:200;background:var(--black);transform:translateY(100%);transition:transform 0.7s cubic-bezier(0.77,0,0.175,1);overflow-y:auto;}
     .article-page.open{transform:translateY(0);}
     .article-back{position:fixed;top:32px;left:48px;z-index:210;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;cursor:none;background:none;border:none;font-family:'Montserrat',sans-serif;font-weight:300;}
     .article-back .line{width:24px;height:1px;background:var(--gold);}
     .article-hero{height:60vh;position:relative;overflow:hidden;}
     .article-hero-bg{width:100%;height:100%;background:linear-gradient(135deg,#0d0d0d,#1a1212);}
+    .article-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(0.4);}
     .article-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--black),transparent);}
     .article-hero-content{position:absolute;bottom:48px;left:120px;z-index:2;max-width:700px;}
     .article-cat{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:16px;}
-    .article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;line-height:1.1;}
-    .article-body{max-width:720px;margin:0 auto;padding:64px 24px 120px;}
+    .article-title-el{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;line-height:1.1;}
+
+    /* ARTICLE BODY WITH SIDEBAR ADS */
+    .article-layout{display:grid;grid-template-columns:1fr 300px;gap:48px;max-width:1100px;margin:0 auto;padding:64px 48px 120px;}
+    .article-main{}
+    .article-sidebar{display:flex;flex-direction:column;gap:24px;padding-top:48px;}
+    .article-sidebar-ad{width:300px;height:250px;overflow:hidden;background:var(--gray);border:1px solid var(--gray-mid);}
+    .article-sidebar-ad-tall{width:300px;height:500px;overflow:hidden;background:var(--gray);border:1px solid var(--gray-mid);}
     .article-meta{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:300;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--gray-mid);}
     .article-content{font-size:14px;line-height:2.1;color:rgba(245,240,234,0.8);font-weight:200;}
     .article-content h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);margin:48px 0 20px;}
     .article-content p{margin-bottom:24px;}
-    .ad-article{width:300px;height:250px;background:var(--gray);border:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:center;margin:40px auto;overflow:hidden;}
-    .loading-indicator{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;padding:48px;}
-    .loading-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);animation:pulse 1s infinite;}
-    .loading-dot:nth-child(2){animation-delay:0.2s;}
-    .loading-dot:nth-child(3){animation-delay:0.4s;}
-    @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
-    footer{padding:48px 120px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;border-top:1px solid var(--gray-mid);}
+    .article-content .article-img{width:100%;margin:32px 0;display:block;position:relative;}
+    .article-content .article-img img{width:100%;max-height:400px;object-fit:cover;filter:brightness(0.85);}
+    .article-content .article-img-placeholder{width:100%;height:280px;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px dashed var(--gray-mid);}
+    .article-content .article-img-placeholder span{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+    .article-content .article-img-placeholder .img-icon{font-size:24px;opacity:0.3;}
+    .ad-article-inline{width:300px;height:250px;overflow:hidden;background:var(--gray);border:1px solid var(--gray-mid);margin:40px auto;}
+
+    /* FOOTER */
+    footer{padding:48px 80px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;border-top:1px solid var(--gray-mid);}
     .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:6px;text-transform:uppercase;}
     .footer-logo span{color:var(--gold);}
     .footer-links{display:flex;gap:32px;}
     .footer-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:none;transition:color 0.3s;}
     .footer-link:hover{color:var(--gold);}
     .footer-copy{font-size:9px;color:var(--muted);letter-spacing:1px;width:100%;padding-top:24px;border-top:1px solid var(--gray-mid);}
+
     body::before{content:'';position:fixed;inset:-50%;z-index:500;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:128px;}
-    @media(max-width:768px){nav{padding:18px 24px;}.nav-links{display:none;}.hero{padding:100px 24px 60px;}.ad-hero{display:none;}.section{padding:60px 24px;}.blog-grid{grid-template-columns:1fr;}.categories-grid{grid-template-columns:1fr 1fr;}.ad-strip{padding:24px;}.ad-leaderboard{width:320px;height:50px;}.article-hero-content{left:24px;bottom:32px;}.article-body{padding:40px 24px 80px;}footer{padding:40px 24px;flex-direction:column;align-items:flex-start;}}
+
+    @media(max-width:1200px){.page-wrapper{grid-template-columns:0 1fr 0;}.sidebar{display:none;}}
+    @media(max-width:768px){nav{padding:18px 24px;}.nav-links{display:none;}.hero{padding:100px 24px 60px;}.ad-hero{display:none;}.section{padding:60px 24px;}.blog-grid{grid-template-columns:1fr;}.categories-grid{grid-template-columns:1fr 1fr;}.ad-strip{padding:24px;}.ad-leaderboard{width:320px;height:50px;}.article-hero-content{left:24px;bottom:32px;}.article-layout{grid-template-columns:1fr;padding:40px 24px 80px;}.article-sidebar{display:none;}footer{padding:40px 24px;flex-direction:column;align-items:flex-start;}}
   </style>
 </head>
 <body>
@@ -117,7 +149,7 @@
       <button class="age-btn-yes" onclick="enterSite()">I am 18+</button>
       <button class="age-btn-no" onclick="window.location.href='https://www.google.com'">Exit</button>
     </div>
-    <div class="age-gate-disclaimer">By entering this site you agree that you are of legal age in your country.<br>This site may contain affiliate links and advertisements. © 2026 ASMYA</div>
+    <div class="age-gate-disclaimer">By entering you agree that you are of legal age in your country.<br>This site may contain affiliate links and advertisements. © 2026 ASMYA</div>
   </div>
 </div>
 
@@ -132,102 +164,122 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg-text">ASMYA</div>
-  <div class="hero-content">
-    <div class="hero-tag">Curated Aesthetic Magazine</div>
-    <h1 class="hero-title">Socks, Tights<br>& <em>Feminine</em><br>Aesthetic.</h1>
-    <p class="hero-sub">Your curated destination for socks, tights and feminine aesthetic inspiration. Style guides, outfit ideas and the latest trends — all in one place.</p>
-    <a href="#latest" class="hero-cta">Explore the magazine <span style="width:20px;height:1px;background:currentColor;display:inline-block;"></span></a>
-  </div>
-  <!-- EXOCLICK AD 300x250 -->
-  <div class="ad-hero">
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e2" data-zoneid="5948956"></ins>
-    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-  </div>
-</div>
+<!-- PAGE WRAPPER WITH SIDEBARS -->
+<div class="page-wrapper">
 
-<!-- AD STRIP -->
-<div class="ad-strip">
-  <div class="ad-leaderboard">
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e2" data-zoneid="5948958"></ins>
-    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-  </div>
-</div>
-
-<!-- LATEST POSTS -->
-<div class="section" id="latest">
-  <div class="section-header">
-    <div>
-      <div class="section-tag">Latest</div>
-      <h2 class="section-title">Fresh from the <em>magazine.</em></h2>
-    </div>
-    <a href="#" class="view-all" onclick="currentCategory=null;renderGrid(articles);return false;">View all</a>
-  </div>
-  <div id="blogGrid" class="blog-grid">
-    <div class="loading-indicator">
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <span>Loading articles...</span>
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-ad sidebar-ad-160">
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e2" data-zoneid="5948960"></ins>
+      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
     </div>
   </div>
-</div>
 
-<!-- AD STRIP 2 -->
-<div class="ad-strip">
-  <div class="ad-leaderboard">
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e2" data-zoneid="5948958"></ins>
-    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg-text">ASMYA</div>
+      <div class="hero-content">
+        <div class="hero-tag">Curated Aesthetic Magazine</div>
+        <h1 class="hero-title">Socks, Tights<br>& <em>Feminine</em><br>Aesthetic.</h1>
+        <p class="hero-sub">Your curated destination for socks, tights and feminine aesthetic inspiration. Style guides, outfit ideas and the latest trends.</p>
+        <a href="#latest" class="hero-cta">Explore the magazine <span style="width:20px;height:1px;background:currentColor;display:inline-block;"></span></a>
+      </div>
+      <div class="ad-hero">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948956"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
+    </div>
+
+    <!-- AD STRIP -->
+    <div class="ad-strip">
+      <div class="ad-leaderboard">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948958"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
+    </div>
+
+    <!-- LATEST POSTS -->
+    <div class="section" id="latest">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">Latest</div>
+          <h2 class="section-title">Fresh from the <em>magazine.</em></h2>
+        </div>
+        <a href="#" class="view-all" onclick="currentCategory=null;renderGrid(articles);return false;">View all</a>
+      </div>
+      <div id="blogGrid" class="blog-grid"></div>
+    </div>
+
+    <!-- AD STRIP 2 -->
+    <div class="ad-strip">
+      <div class="ad-leaderboard">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948958"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="section" id="categories">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">Browse</div>
+          <h2 class="section-title">Explore by <em>category.</em></h2>
+        </div>
+      </div>
+      <div class="categories-grid">
+        <a href="#latest" class="category-card" onclick="filterCategory('Style & Outfits');return false;">
+          <div class="category-num">01</div>
+          <div class="category-name">Style & Outfits</div>
+          <div class="category-count">Outfit inspiration</div>
+        </a>
+        <a href="#latest" class="category-card" onclick="filterCategory('Aesthetic & Trends');return false;">
+          <div class="category-num">02</div>
+          <div class="category-name">Aesthetic & Trends</div>
+          <div class="category-count">Latest trends</div>
+        </a>
+        <a href="#latest" class="category-card" onclick="filterCategory('Socks Guide');return false;">
+          <div class="category-num">03</div>
+          <div class="category-name">Socks Guide</div>
+          <div class="category-count">Socks & hosiery</div>
+        </a>
+        <a href="#latest" class="category-card" onclick="filterCategory('Tights & Fishnets');return false;">
+          <div class="category-num">04</div>
+          <div class="category-name">Tights & Fishnets</div>
+          <div class="category-count">Tights & collants</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">ASM<span>Y</span>A</div>
+      <div class="footer-links">
+        <a href="https://fr.pinterest.com/Asmya09/" target="_blank" class="footer-link">Pinterest</a>
+        <a href="mailto:asmya.contact@proton.me" class="footer-link">Contact</a>
+        <a href="#" class="footer-link" onclick="document.getElementById('disclosureOverlay').style.display='block';return false;">Disclosure</a>
+      </div>
+      <div class="footer-copy">© 2026 ASMYA — All rights reserved. This site may contain affiliate links and sponsored content.</div>
+    </footer>
+
   </div>
-</div>
 
-<!-- CATEGORIES -->
-<div class="section" id="categories">
-  <div class="section-header">
-    <div>
-      <div class="section-tag">Browse</div>
-      <h2 class="section-title">Explore by <em>category.</em></h2>
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-ad sidebar-ad-300">
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e2" data-zoneid="5948962"></ins>
+      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
     </div>
   </div>
-  <div class="categories-grid">
-    <a href="#latest" class="category-card" onclick="filterCategory('Style & Outfits');return false;">
-      <div class="category-num">01</div>
-      <div class="category-name">Style & Outfits</div>
-      <div class="category-count">Outfit inspiration</div>
-    </a>
-    <a href="#latest" class="category-card" onclick="filterCategory('Aesthetic & Trends');return false;">
-      <div class="category-num">02</div>
-      <div class="category-name">Aesthetic & Trends</div>
-      <div class="category-count">Latest trends</div>
-    </a>
-    <a href="#latest" class="category-card" onclick="filterCategory('Socks Guide');return false;">
-      <div class="category-num">03</div>
-      <div class="category-name">Socks Guide</div>
-      <div class="category-count">Socks & hosiery</div>
-    </a>
-    <a href="#latest" class="category-card" onclick="filterCategory('Tights & Fishnets');return false;">
-      <div class="category-num">04</div>
-      <div class="category-name">Tights & Fishnets</div>
-      <div class="category-count">Tights & collants</div>
-    </a>
-  </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">ASM<span>Y</span>A</div>
-  <div class="footer-links">
-    <a href="https://fr.pinterest.com/Asmya09/" target="_blank" class="footer-link">Pinterest</a>
-    <a href="mailto:asmya.contact@proton.me" class="footer-link">Contact</a>
-    <a href="#" class="footer-link" onclick="document.getElementById('disclosureOverlay').style.display='block';return false;">Disclosure</a>
-  </div>
-  <div class="footer-copy">© 2026 ASMYA — All rights reserved. This site may contain affiliate links and sponsored content.</div>
-</footer>
+</div>
 
 <!-- ARTICLE PAGE -->
 <div class="article-page" id="articlePage">
@@ -239,27 +291,31 @@
     <div class="article-hero-bg" id="articleHeroBg"></div>
     <div class="article-hero-content">
       <div class="article-cat" id="articleCat"></div>
-      <div class="article-title" id="articleTitle"></div>
+      <div class="article-title-el" id="articleTitle"></div>
     </div>
   </div>
-  <div class="article-body">
-    <div class="article-meta" id="articleMeta"></div>
-    <div class="ad-article">
-      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-      <ins class="eas6a97888e2" data-zoneid="5948956"></ins>
-      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  <div class="article-layout">
+    <div class="article-main">
+      <div class="article-meta" id="articleMeta"></div>
+      <div class="article-content" id="articleContent"></div>
     </div>
-    <div class="article-content" id="articleContent"></div>
-    <div class="ad-article" style="margin-top:48px;">
-      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-      <ins class="eas6a97888e2" data-zoneid="5948956"></ins>
-      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+    <div class="article-sidebar">
+      <div class="article-sidebar-ad">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948956"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
+      <div class="article-sidebar-ad-tall">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948962"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- DISCLOSURE -->
-<div id="disclosureOverlay" style="display:none;position:fixed;inset:0;background:var(--black);z-index:300;overflow-y:auto;padding:120px 120px;">
+<div id="disclosureOverlay" style="display:none;position:fixed;inset:0;background:var(--black);z-index:300;overflow-y:auto;padding:120px;">
   <button onclick="document.getElementById('disclosureOverlay').style.display='none'" style="position:fixed;top:32px;left:48px;background:none;border:none;color:var(--gold);font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:none;">← Back</button>
   <div style="max-width:700px;margin:0 auto;">
     <div style="font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;">Legal</div>
@@ -282,7 +338,6 @@ if(sessionStorage.getItem('ageVerified')){
   loadArticles();
 }
 
-// ARTICLE
 let articles=[];
 let currentCategory=null;
 
@@ -291,6 +346,7 @@ function openArticle(a){
   document.getElementById('articleTitle').textContent=a.title;
   document.getElementById('articleMeta').textContent=a.date+' — '+a.readTime+' min read';
   document.getElementById('articleContent').innerHTML=a.content;
+  document.getElementById('articleHeroBg').innerHTML=a.heroImg?'<img src="'+a.heroImg+'" alt="'+a.title+'">':'';
   document.getElementById('articlePage').classList.add('open');
   document.body.style.overflow='auto';
   window.scrollTo(0,0);
@@ -300,62 +356,131 @@ function closeArticle(){
   document.body.style.overflow='';
 }
 
-// HARDCODED ARTICLES
+function imgSlot(id,caption){
+  return '<div class="article-img"><div class="article-img-placeholder"><span class="img-icon">🖼</span><span>Image slot '+id+' — '+caption+'</span><span style="font-size:7px;color:var(--muted);letter-spacing:2px;">Add your Midjourney image URL here</span></div></div>';
+}
+
 function loadArticles(){
   articles = [
     {
-      id: 0,
-      title: "How to Style White Crew Socks",
-      category: "Style & Outfits",
-      excerpt: "White crew socks are the ultimate soft girl staple — here's how to wear them with everything from platform shoes to mini skirts.",
-      date: "June 13, 2026",
-      readTime: 4,
-      content: "<p>White crew socks have become the defining accessory of the soft girl and clean girl aesthetics. Simple, versatile, and endlessly charming — they elevate any outfit effortlessly.</p><h2>With Platform Shoes</h2><p>Pair your white crew socks with chunky platform shoes or Mary Janes for that quintessential Y2K-inspired look. Let the socks fold slightly over the shoe for maximum cuteness. This combination works beautifully with mini skirts or plaid trousers.</p><h2>With Sneakers</h2><p>The classic white sock and sneaker duo never goes out of style. Opt for slightly longer crew socks that peek above the ankle — this small detail adds a playful touch to even the most minimal outfit. New Balance or vintage-inspired trainers pair especially well.</p><h2>With Boots</h2><p>Tuck your crew socks into ankle boots and let just a hint of white peek out at the top. This unexpected combination feels both cozy and fashion-forward — perfect for autumn walks or casual days out.</p><p>White crew socks are proof that the smallest details make the biggest difference. Add a pair to your wardrobe and watch your outfits transform.</p>"
+      id:0,
+      title:"How to Style White Crew Socks",
+      category:"Style & Outfits",
+      excerpt:"White crew socks are the ultimate soft girl staple — here is how to make them your most seductive accessory.",
+      date:"June 13, 2026",
+      readTime:4,
+      heroImg:"",
+      content:`<p>White crew socks are deceptively powerful. That small flash of white against bare skin, the way they sit just above the ankle — it is a detail that draws the eye, quietly and irresistibly. Master them, and your outfits will never look the same.</p>
+${imgSlot(1,"White crew socks with platform shoes")}
+<h2>With Platform Shoes</h2>
+<p>Pair your white crew socks with chunky platform shoes or Mary Janes and let the socks fold slightly over the shoe. The contrast of the thick sole against the delicate sock creates a tension that is both playful and undeniably sensual. A micro skirt completes the picture.</p>
+${imgSlot(2,"Socks with sneakers close-up")}
+<h2>With Sneakers</h2>
+<p>The classic white sock and sneaker combination is timeless for a reason. Choose slightly longer crew socks that peek above the ankle — that exposed strip of leg between the sock and hem is where the magic happens. Keep everything else minimal to let this detail breathe.</p>
+<h2>With Boots</h2>
+<p>Tuck your crew socks into ankle boots and let just a whisper of white show at the top. It is an unexpected detail — intimate, almost accidental — that suggests more than it reveals. This is the kind of styling that stays in someone's memory.</p>
+${imgSlot(3,"Full outfit shot with white socks and boots")}
+<p>White crew socks are proof that the smallest details carry the most weight. They frame the ankle, draw attention to the leg, and add an innocence that makes everything feel just slightly more intriguing.</p>`
     },
     {
-      id: 1,
-      title: "Fishnet Tights: The Ultimate Style Guide",
-      category: "Tights & Fishnets",
-      excerpt: "From edgy to elegant — fishnet tights are the most versatile piece in your wardrobe. Here is everything you need to know.",
-      date: "June 12, 2026",
-      readTime: 5,
-      content: "<p>Fishnet tights have transcended their rebellious roots to become a mainstream fashion staple. Whether you lean dark feminine or soft aesthetic, there is a way to wear them that feels entirely yours.</p><h2>The Classic Dark Look</h2><p>Black fishnet tights paired with a slip dress, platform boots, and a leather jacket create that iconic dark feminine aesthetic. The contrast between delicate fishnet and bold outerwear is visually striking — effortlessly cool without trying too hard.</p><h2>The Soft Feminine Approach</h2><p>Not all fishnet looks need to be edgy. Try white or nude fishnets under a floral mini dress with ballet flats for a surprisingly delicate combination. The texture adds dimension without overpowering the sweetness of the look.</p><h2>Layering Techniques</h2><p>One of the best tricks with fishnet tights is layering — wear them over opaque tights or under ripped jeans for a peek-a-boo effect. This technique adds depth and interest to otherwise simple outfits.</p><p>Fishnet tights are one of those rare pieces that genuinely work for every aesthetic. Invest in a few pairs — they will become some of the most-reached-for items in your drawer.</p>"
+      id:1,
+      title:"Fishnet Tights: The Ultimate Style Guide",
+      category:"Tights & Fishnets",
+      excerpt:"Fishnet tights are the most powerful texture in your wardrobe — here is how to wear them with maximum effect.",
+      date:"June 12, 2026",
+      readTime:5,
+      heroImg:"",
+      content:`<p>There is nothing subtle about fishnet tights. The pattern speaks immediately — a graphic web of texture that transforms any outfit and changes the entire energy of what you are wearing. Used well, they are one of the most compelling pieces in fashion.</p>
+${imgSlot(1,"Fishnet tights dark feminine look")}
+<h2>The Dark Feminine Look</h2>
+<p>Black fishnet tights with a slip dress, platform boots, and a leather jacket is an iconic combination for good reason. The fishnet creates depth and texture against the skin, visible beneath the slip fabric — a layered effect that rewards closer attention. This is the aesthetic at its most powerful.</p>
+${imgSlot(2,"Sheer fishnet details close-up")}
+<h2>The Delicate Approach</h2>
+<p>White or champagne fishnets under a floral mini dress create an unexpected softness — the graphic pattern of the tights contrasting with the feminine print above. The result is a tension between innocence and edge that feels sophisticated and very intentional.</p>
+<h2>The Art of Layering</h2>
+<p>Wear fishnet tights over opaque black tights for a shadowed, textured effect — the pattern becomes more subtle, more mysterious. Alternatively, let them show through ripped jeans for that glimpse-of-something quality that makes fishnet tights so compelling in the first place.</p>
+${imgSlot(3,"Layered tights styling detail")}
+<p>Fishnet tights demand confidence to wear well — and reward it handsomely. They are not a background element. They are the statement.</p>`
     },
     {
-      id: 2,
-      title: "Soft Girl Aesthetic: Complete 2026 Guide",
-      category: "Aesthetic & Trends",
-      excerpt: "The soft girl aesthetic continues to evolve in 2026. Here is your complete guide to nailing this dreamy, feminine look.",
-      date: "June 11, 2026",
-      readTime: 5,
-      content: "<p>The soft girl aesthetic is more than just an outfit — it is a mood, a feeling, a gentle declaration of femininity. In 2026, the look has evolved into something even more nuanced and personal.</p><h2>Key Wardrobe Pieces</h2><p>Think oversized cardigans in muted pinks and creams, slip skirts in satin or silk, and of course — the essential white or pastel crew socks. Bows, hair clips, and delicate jewelry complete the picture. Every piece should feel soft to the touch and easy on the eye.</p><h2>The Role of Socks and Tights</h2><p>In the soft girl universe, socks are not an afterthought — they are a statement. White lace-trimmed socks, pastel knee-highs, and sheer tights with subtle patterns all contribute to the dreamy quality of the aesthetic. The goal is to look as though you stepped out of a vintage photograph.</p><h2>Color Palette</h2><p>Stick to dusty roses, warm creams, soft lavenders, and muted sage greens. Avoid anything too saturated or bold — the beauty of this aesthetic lies in its gentleness. When in doubt, choose the softer version of any color.</p><p>The soft girl aesthetic is ultimately about embracing a quieter, more tender version of yourself. Let your wardrobe reflect that softness.</p>"
+      id:2,
+      title:"Soft Girl Aesthetic: Complete 2026 Guide",
+      category:"Aesthetic & Trends",
+      excerpt:"The soft girl aesthetic is about more than pastels — it is a studied, deliberate femininity that feels effortlessly alluring.",
+      date:"June 11, 2026",
+      readTime:5,
+      heroImg:"",
+      content:`<p>The soft girl aesthetic has evolved far beyond its pastel origins. In 2026, it has become something more considered — a femininity that is deliberately gentle on the surface but deeply intentional underneath. Every piece chosen, every detail studied.</p>
+${imgSlot(1,"Soft girl outfit flat lay")}
+<h2>The Foundation Pieces</h2>
+<p>Oversized cardigans in cream or dusty rose, satin slip skirts that catch the light, delicate lace-trimmed tops — these are the building blocks. The key is softness in every sense: soft colors, soft fabrics, soft silhouettes. And always, always, the white or pastel crew socks that have become the signature of this aesthetic.</p>
+${imgSlot(2,"Close-up of lace socks and legs")}
+<h2>Socks as the Central Detail</h2>
+<p>In the soft girl universe, socks are not an afterthought — they are a deliberate choice that frames the ankle and draws attention to the leg. White lace-trimmed crew socks, pastel knee-highs that creep just above the knee, sheer tights with a barely-there pattern — each one adds a layer of feminine detail that elevates the whole look.</p>
+<h2>The Palette and Mood</h2>
+<p>Dusty rose, warm ivory, soft lavender, muted sage. The colors should feel like a memory — slightly faded, warm, nostalgic. The goal is to look as though you exist slightly outside of regular time, in a softer, more beautiful version of the world.</p>
+${imgSlot(3,"Soft girl aesthetic full outfit")}
+<p>The soft girl aesthetic rewards those who commit to it fully. Every detail matters, every choice is intentional. The softness is never accidental.</p>`
     },
     {
-      id: 3,
-      title: "Sheer Tights: Elegant Feminine Looks",
-      category: "Tights & Fishnets",
-      excerpt: "Sheer tights are the most elegant hosiery option — timeless, versatile, and endlessly sophisticated. Here is how to wear them.",
-      date: "June 10, 2026",
-      readTime: 4,
-      content: "<p>There is something undeniably sophisticated about sheer tights. They have graced the legs of fashion icons for decades, and in 2026, they feel more relevant than ever.</p><h2>The Classic Office Look</h2><p>Sheer nude tights with a midi skirt and pointed-toe heels remain the gold standard of professional elegance. The sheerness elongates the leg while maintaining a polished, put-together appearance. Choose a shade that closely matches your skin tone for the most seamless effect.</p><h2>The Evening Aesthetic</h2><p>For evenings out, opt for sheer black tights with a bodycon dress or a tailored blazer outfit. The slight transparency adds a layer of intrigue — revealing just enough to feel alluring without being overt. Pair with strappy heels for maximum impact.</p><h2>Unexpected Pairings</h2><p>Sheer tights work surprisingly well with more casual pieces too. Try them under denim shorts with loafers, or beneath a graphic tee tucked into a mini skirt. The contrast between the delicacy of the tights and the casualness of the outfit creates an interesting tension that feels very current.</p><p>Sheer tights are the definition of quiet luxury — understated, refined, and eternally chic.</p>"
+      id:3,
+      title:"Sheer Tights: Elegant Feminine Looks",
+      category:"Tights & Fishnets",
+      excerpt:"Sheer tights are the most quietly powerful piece in hosiery — here is how to use them to their full effect.",
+      date:"June 10, 2026",
+      readTime:4,
+      heroImg:"",
+      content:`<p>Sheer tights occupy a unique space in fashion — they are simultaneously there and not there. That transparency, that hint of skin visible beneath the fabric, creates a quality that is difficult to define but impossible to ignore.</p>
+${imgSlot(1,"Sheer tights close-up detail")}
+<h2>The Classic Elegance</h2>
+<p>Sheer nude tights with a midi skirt and pointed heels is a combination that has defined feminine elegance for decades. The sheerness elongates the leg, creates a smoothness of line that is deeply flattering, and maintains that quality of revealing just enough. The skin visible through the fabric adds warmth and dimension that bare legs cannot replicate.</p>
+${imgSlot(2,"Evening outfit with sheer black tights")}
+<h2>For the Evening</h2>
+<p>Sheer black tights at night are an entirely different proposition. Beneath a bodycon dress or a tailored blazer, they create a darkness that is rich and deep — the leg visible beneath the sheer fabric, the texture adding dimension to what could otherwise be a flat expanse of black. This is quiet luxury at its most compelling.</p>
+<h2>Unexpected Combinations</h2>
+<p>The contrast of sheer tights with casual pieces creates an interesting tension. Try them under denim cut-offs with chunky loafers, or beneath an oversized graphic tee. The delicacy of the tights makes everything around them feel more considered.</p>
+${imgSlot(3,"Sheer tights with casual outfit")}
+<p>Sheer tights are for those who understand that the most powerful things are often the most understated. They do their work quietly, and brilliantly.</p>`
     },
     {
-      id: 4,
-      title: "Dark Feminine Aesthetic: Key Pieces",
-      category: "Aesthetic & Trends",
-      excerpt: "The dark feminine aesthetic is powerful, mysterious, and deeply intentional. Here are the key pieces to build your wardrobe.",
-      date: "June 9, 2026",
-      readTime: 5,
-      content: "<p>The dark feminine aesthetic is not about darkness for its own sake — it is about owning your power, your mystery, and your depth. It is femininity without apology, strength without harshness.</p><h2>The Foundation: Black Tights and Fishnets</h2><p>No dark feminine wardrobe is complete without an arsenal of black tights and fishnet styles. These pieces form the foundation of every look — grounding outfits in depth and texture while maintaining that essential feminine quality. Invest in quality; sheer black tights in particular should be a staple.</p><h2>Velvet, Satin, and Lace</h2><p>The dark feminine aesthetic lives in luxurious textures. Velvet midi skirts, satin slip dresses, and lace-trimmed pieces create that opulent, slightly gothic quality that defines the look. These textures catch light beautifully and give even simple outfits a sense of occasion.</p><h2>Accessories and Details</h2><p>Sterling silver jewelry, dark florals, and deep burgundy or forest green accents add dimension without breaking the dark palette. A pair of knee-high boots or strappy heels completes almost any dark feminine look with effortless authority.</p><p>The dark feminine aesthetic rewards those who commit to it fully. When every piece is chosen with intention, the result is an aesthetic that feels truly powerful.</p>"
+      id:4,
+      title:"Dark Feminine Aesthetic: Key Pieces",
+      category:"Aesthetic & Trends",
+      excerpt:"The dark feminine aesthetic is about power, mystery, and a deeply intentional femininity. Here are the pieces that define it.",
+      date:"June 9, 2026",
+      readTime:5,
+      heroImg:"",
+      content:`<p>The dark feminine aesthetic is not an affectation. It is a philosophy — a way of inhabiting femininity that refuses to be gentle, apologetic, or easily dismissed. It is the silk and the shadows, the lace and the edge, the softness that contains something harder underneath.</p>
+${imgSlot(1,"Dark feminine mood flat lay")}
+<h2>The Tights That Define the Look</h2>
+<p>No dark feminine wardrobe exists without its foundation of black hosiery. Sheer black tights, fishnet styles in fine and wide mesh, opaque blacks with a subtle sheen — each one creates a different quality of darkness. The leg beneath the tights is always part of the image, visible through the fabric, adding depth and dimension that bare legs simply cannot achieve.</p>
+${imgSlot(2,"Dark feminine outfit detail - velvet and lace")}
+<h2>The Textures of Power</h2>
+<p>Velvet absorbs light. Satin reflects it. Lace filters it. These three textures are the vocabulary of the dark feminine aesthetic — used together or separately, they create an opulence that feels rich and deliberate. A velvet midi skirt over black fishnets, a satin slip beneath a sheer lace top — the combinations are endless, and all of them work.</p>
+<h2>The Details That Complete the Image</h2>
+<p>Dark florals, deep wine lips, silver jewelry that glints against dark fabric, knee-high boots that mean business — these are the details that transform an outfit into a statement. In the dark feminine aesthetic, every element is chosen. Nothing is accidental.</p>
+${imgSlot(3,"Complete dark feminine look")}
+<p>The dark feminine aesthetic belongs to those who have stopped apologizing for taking up space. Wear it accordingly.</p>`
     },
     {
-      id: 5,
-      title: "Knee High Socks: Style Inspiration",
-      category: "Socks Guide",
-      excerpt: "Knee high socks are having a major moment in 2026. Here is everything you need to know about styling them beautifully.",
-      date: "June 8, 2026",
-      readTime: 4,
-      content: "<p>Knee high socks have been a fashion fixture for decades, but in 2026 they have taken on new life — appearing everywhere from street style to high fashion editorials.</p><h2>The Preppy Classic</h2><p>White or navy knee high socks with a pleated mini skirt and loafers create that timeless preppy aesthetic that never goes out of style. The look is polished yet playful — a perfect balance that works for everything from college campuses to weekend brunches.</p><h2>The Cozy Aesthetic</h2><p>Thick knit knee high socks worn over leggings or under an oversized sweater dress create the ultimate cozy aesthetic. Choose heathered grays, warm creams, or dusty pinks for a palette that feels genuinely soft and inviting. This is the kind of outfit made for autumn days and warm beverages.</p><h2>The Fashion-Forward Approach</h2><p>For a more directional look, try mismatched knee high socks in complementary colors, or opt for styles with subtle patterns — stripes, small florals, or delicate ribbing. Pair with platform boots or chunky sneakers for a look that feels very current without being inaccessible.</p><p>Knee high socks are one of those accessories that add instant personality to any outfit. Do not underestimate their power.</p>"
+      id:5,
+      title:"Knee High Socks: Style Inspiration",
+      category:"Socks Guide",
+      excerpt:"Knee high socks are having a defining moment in 2026 — here is how to wear them to maximum effect.",
+      date:"June 8, 2026",
+      readTime:4,
+      heroImg:"",
+      content:`<p>Knee high socks do something that few other pieces can: they frame the leg entirely, creating a line from the floor to the knee that is both graphic and deeply feminine. That stretch of thigh above the sock is deliberate — a detail that has made this piece one of the most photographed in aesthetic fashion.</p>
+${imgSlot(1,"Knee high socks close-up with skirt")}
+<h2>The Classic That Never Ages</h2>
+<p>White knee highs with a pleated mini and loafers is a combination that has circulated through fashion for decades and shows no signs of stopping. The appeal is in the proportions — the graphic block of white against bare thigh, the contrast between the sweetness of the sock and the brevity of the hem. It is studied innocence, and it is always effective.</p>
+${imgSlot(2,"Cozy knee high socks styling")}
+<h2>The Cozy Aesthetic Version</h2>
+<p>Thick knit knee highs worn with an oversized sweater dress create a different kind of appeal — layered, warm, tactile. The sock itself becomes a feature, its texture visible, its warmth implied. Choose heathered grays, warm creams, or dusty pinks and let the whole look feel like something you want to reach out and touch.</p>
+<h2>The Fashion-Forward Approach</h2>
+<p>Mismatched knee highs in complementary colors, or styles with subtle patterns — fine stripes, small florals, delicate ribbing — create interest without overwhelming. Pair with platform boots or chunky sneakers for a look that feels current and considered.</p>
+${imgSlot(3,"Knee high socks full outfit styling")}
+<p>Knee high socks frame the leg in a way that nothing else does. That line, that geometry, that exposure above the sock — it is a quiet but powerful detail that transforms everything it touches.</p>`
     }
   ];
   renderGrid(articles);
@@ -364,10 +489,10 @@ function loadArticles(){
 function renderGrid(arts){
   const grid=document.getElementById('blogGrid');
   const list=currentCategory?arts.filter(a=>a.category===currentCategory):arts;
-  if(!list.length){grid.innerHTML='<div class="loading-indicator"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div><span>Loading...</span></div>';return;}
+  if(!list.length){grid.innerHTML='<div style="padding:48px;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;">No articles in this category yet.</div>';return;}
   grid.innerHTML=list.map(a=>`
     <a class="blog-card" href="#" onclick="openArticle(articles.find(x=>x.id===${a.id}));return false;">
-      <div class="blog-card-img-placeholder"></div>
+      <div style="width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);overflow:hidden;">${a.heroImg?'<img class="blog-card-img" src="'+a.heroImg+'" alt="'+a.title+'">':''}</div>
       <div class="blog-card-body">
         <div class="blog-card-cat">${a.category}</div>
         <div class="blog-card-title">${a.title}</div>
