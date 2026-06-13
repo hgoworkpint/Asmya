@@ -328,6 +328,9 @@
 
 <script>
 // AGE GATE
+let articles=[];
+let currentCategory=null;
+
 function enterSite(){
   document.getElementById('ageGate').classList.add('hide');
   sessionStorage.setItem('ageVerified','true');
@@ -337,9 +340,6 @@ if(sessionStorage.getItem('ageVerified')){
   document.getElementById('ageGate').classList.add('hide');
   loadArticles();
 }
-
-let articles=[];
-let currentCategory=null;
 
 function openArticle(a){
   document.getElementById('articleCat').textContent=a.category;
