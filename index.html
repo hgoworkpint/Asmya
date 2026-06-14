@@ -133,6 +133,35 @@
 
     body::before{content:'';position:fixed;inset:-50%;z-index:500;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:128px;}
 
+    /* STORIES */
+    .stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-mid);}
+    .story-card{background:var(--black);overflow:hidden;cursor:none;transition:background 0.3s;text-decoration:none;color:var(--white);display:block;}
+    .story-card:hover{background:var(--gray);}
+    .story-card-img{width:100%;aspect-ratio:3/2;object-fit:cover;filter:brightness(0.6);transition:filter 0.4s,transform 0.4s;display:block;background:linear-gradient(135deg,#0d0808,#1a1010);}
+    .story-card:hover .story-card-img{filter:brightness(0.85);transform:scale(1.03);}
+    .story-card-body{padding:24px;}
+    .story-card-tag{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#a07060;font-weight:300;margin-bottom:10px;}
+    .story-card-title{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:300;line-height:1.3;margin-bottom:12px;font-style:italic;}
+    .story-card-excerpt{font-size:10px;line-height:1.8;color:var(--muted-light);font-weight:200;margin-bottom:16px;}
+    .story-card-meta{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:300;}
+    .story-page{position:fixed;inset:0;z-index:200;background:var(--black);transform:translateY(100%);transition:transform 0.7s cubic-bezier(0.77,0,0.175,1);overflow-y:auto;}
+    .story-page.open{transform:translateY(0);}
+    .story-back{position:fixed;top:32px;left:48px;z-index:210;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:3px;color:#a07060;text-transform:uppercase;cursor:none;background:none;border:none;font-family:"Montserrat",sans-serif;font-weight:300;}
+    .story-back .line{width:24px;height:1px;background:#a07060;}
+    .story-hero{height:50vh;position:relative;overflow:hidden;}
+    .story-hero-bg{width:100%;height:100%;background:linear-gradient(135deg,#0d0808,#1a1010);}
+    .story-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(0.35);}
+    .story-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--black),transparent);}
+    .story-hero-content{position:absolute;bottom:48px;left:120px;z-index:2;max-width:700px;}
+    .story-tag-el{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#a07060;font-weight:300;margin-bottom:16px;}
+    .story-title-el{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,5vw,60px);font-weight:300;line-height:1.1;font-style:italic;}
+    .story-layout{max-width:780px;margin:0 auto;padding:64px 48px 120px;}
+    .story-meta-el{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:300;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--gray-mid);}
+    .story-body{font-family:"Cormorant Garamond",serif;font-size:18px;line-height:2;color:rgba(245,240,234,0.85);font-weight:300;}
+    .story-body p{margin-bottom:28px;}
+    .story-body img{width:100%;max-height:400px;object-fit:cover;filter:brightness(0.75);margin:40px 0;display:block;}
+    .story-18{display:inline-block;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#a07060;border:1px solid #a07060;padding:3px 8px;margin-bottom:32px;font-family:"Montserrat",sans-serif;font-weight:300;}
+
     @media(max-width:1200px){.page-wrapper{grid-template-columns:0 1fr 0;}.sidebar{display:none;}}
     @media(max-width:768px){nav{padding:18px 24px;}.nav-links{display:none;}.hero{padding:100px 24px 60px;}.ad-hero{display:none;}.section{padding:60px 24px;}.blog-grid{grid-template-columns:1fr;}.categories-grid{grid-template-columns:1fr 1fr;}.ad-strip{padding:24px;}.ad-leaderboard{width:320px;height:50px;}.article-hero-content{left:24px;bottom:32px;}.article-layout{grid-template-columns:1fr;padding:40px 24px 80px;}.article-sidebar{display:none;}footer{padding:40px 24px;flex-direction:column;align-items:flex-start;}}
   </style>
@@ -161,6 +190,7 @@
   <div class="nav-links">
     <a href="#latest" class="nav-link">Latest</a>
     <a href="#categories" class="nav-link">Categories</a>
+    <a href="#stories" class="nav-link">Stories</a>
     <a href="https://fr.pinterest.com/Asmya09/" target="_blank" class="nav-link">Pinterest</a>
     <a href="mailto:asmya.contact@proton.me" class="nav-link">Contact</a>
   </div>
@@ -259,6 +289,26 @@
       </div>
     </div>
 
+
+    <!-- STORIES SECTION -->
+    <div class="section" id="stories">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">Adult Fiction — 18+</div>
+          <h2 class="section-title">Erotic <em>Stories</em></h2>
+        </div>
+      </div>
+      <div class="stories-grid" id="storiesGrid"></div>
+    </div>
+
+    <!-- AD STRIP 2 -->
+    <div class="ad-strip">
+      <div class="ad-leaderboard">
+        <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+        <ins class="eas6a97888e2" data-zoneid="5948958"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+      </div>
+    </div>
     <!-- FOOTER -->
     <footer>
       <div class="footer-logo">ASM<span>Y</span>A</div>
@@ -285,6 +335,25 @@
 
 </div>
 
+<!-- STORY PAGE -->
+<div class="story-page" id="storyPage">
+  <button class="story-back" onclick="closeStory()">
+    <span class="line"></span>
+    Back
+  </button>
+  <div class="story-hero">
+    <div class="story-hero-bg" id="storyHeroBg"></div>
+    <div class="story-hero-content">
+      <div class="story-tag-el">Adult Fiction — 18+</div>
+      <div class="story-title-el" id="storyTitle"></div>
+    </div>
+  </div>
+  <div class="story-layout">
+    <div class="story-meta-el" id="storyMeta"></div>
+    <div class="story-18">18+ — Adult Content</div>
+    <div class="story-body" id="storyContent"></div>
+  </div>
+</div>
 <!-- ARTICLE PAGE -->
 <div class="article-page" id="articlePage">
   <button class="article-back" onclick="closeArticle()">
@@ -541,6 +610,53 @@ function filterCategory(cat){
   renderGrid(articles);
   document.getElementById('latest').scrollIntoView({behavior:'smooth'});
 }
+
+
+// STORIES
+const stories = [
+  {
+    id: 1,
+    title: "My Sister\u2019s Best Friend\u2019s Socks",
+    excerpt: "Every Friday night she comes back from handball practice. I\u2019ve been holding back for three weeks. Tonight is different.",
+    date: "June 14, 2026",
+    readTime: 8,
+    heroImg: "",
+    content: "<p>Friday night, the weekend \u2014 which means my sister\u2019s best friend was going to spend the night at our house because every Friday they come home from sports practice.</p><p>They\u2019ve been playing handball on the same team for a while now. I\u2019m 22, they are 20. I only met her best friend recently \u2014 since the practice is far from her house, her parents agreed to let her stay at our place on Fridays. Much to my delight.</p><p>When they get back from practice, the girls hang out in the living room to eat. We have a corner sofa; I\u2019m usually at the end facing the TV, and they\u2019re at the other end by the coffee table.</p><p>I have a fetish, and Lucie \u2014 my sister\u2019s best friend \u2014 has noticed. She does everything she can to get me to look at her feet. She knows I can\u2019t resist. Especially when she\u2019s wearing her low-cut socks, size 36, still warm from training...</p><p>I can literally smell them from across the couch. Lucie knows full well that when she\u2019s there, my breathing changes. Her feet resting on the table, the trail of warmth left when she shifts position \u2014 it\u2019s been three weeks of holding back. Tonight is different.</p><p>The moment comes when my sister leaves to shower. We\u2019re alone, just her and me. She moves closer to see what I\u2019m doing \u2014 in reality, I\u2019d been stealing glances. I quickly open an app. She watches me with a small smile that tells me she knows exactly what\u2019s happening.</p><p>When my sister comes out of the shower, it\u2019s Lucie\u2019s turn. I head upstairs. Standing in the hallway, the scent from her socks left by the bathroom door is overwhelming. I stand there longer than I should.</p><p>She opens the door right in front of me \u2014 clothes in her arms, baggy t-shirt, shorts. An awkward moment. As she walks toward my sister\u2019s room, one of her socks falls into the hallway without her noticing. It\u2019s late. I pick it up.</p><p>Back in my room, I can\u2019t help myself. When her knock comes moments later, I know she noticed the missing sock too quickly. I hide it \u2014 badly \u2014 and open the door.</p><p>She steps in. Takes one breath. Then: <em>\u201cWait. I recognize that smell.\u201d</em></p><p><em>\u201cI knew you were like this,\u201d</em> she says slowly, <em>\u201cbut to this extent?\u201d</em></p><p>I say nothing. She looks me straight in the eye. <em>\u201cFor three weeks, this is what you\u2019ve been dreaming about?\u201d</em></p><p>My sister\u2019s room is down the hall. Lucie knows she can\u2019t hear us. She steps closer.</p><p><em>\u201cI dropped it on purpose,\u201d</em> she says quietly. <em>\u201cI wanted to see what you\u2019d do. I\u2019m not disappointed.\u201d</em></p><p>She retrieves the sock slowly, then sits on the edge of my bed, feet hanging off the side. <em>\u201cTonight\u2019s practice really hurt my feet. Since you seem to like them so much \u2014 you\u2019re going to take care of that.\u201d</em></p><p>I get on the floor. I begin. Her socks are still warm, still carrying the whole evening with them. She makes quiet sounds that tell me she\u2019s enjoying every second.</p><p>What follows is slow, deliberate, entirely on her terms \u2014 every movement she permits, every moment she controls. By the end, she stands, smooths her shirt, and walks toward the door with a soft laugh.</p><p>The next morning she\u2019s gone before breakfast. But she\u2019d slipped something under my door during the night \u2014 the second sock \u2014 because she knew I wouldn\u2019t make it through without it.</p>"
+  }
+];
+
+function renderStories() {
+  const grid = document.getElementById('storiesGrid');
+  if (!grid) return;
+  grid.innerHTML = stories.map(s => {
+    const img = s.heroImg ? '<img class="story-card-img" src="' + s.heroImg + '">' : '';
+    return '<a class="story-card" href="#" onclick="openStory(stories.find(x=>x.id===' + s.id + '));return false;">'
+      + '<div style="width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#0d0808,#1a1010);overflow:hidden;">' + img + '</div>'
+      + '<div class="story-card-body">'
+      + '<div class="story-card-tag">Fiction &mdash; 18+</div>'
+      + '<div class="story-card-title">' + s.title + '</div>'
+      + '<div class="story-card-excerpt">' + s.excerpt + '</div>'
+      + '<div class="story-card-meta">' + s.date + ' &mdash; ' + s.readTime + ' min read</div>'
+      + '</div></a>';
+  }).join('');
+}
+
+function openStory(s) {
+  document.getElementById('storyTitle').textContent = s.title;
+  document.getElementById('storyMeta').textContent = s.date + ' — ' + s.readTime + ' min read';
+  document.getElementById('storyContent').innerHTML = s.content;
+  document.getElementById('storyHeroBg').innerHTML = s.heroImg ? '<img src="' + s.heroImg + '">' : '';
+  document.getElementById('storyPage').classList.add('open');
+  document.body.style.overflow = 'auto';
+  window.scrollTo(0, 0);
+}
+
+function closeStory() {
+  document.getElementById('storyPage').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+renderStories();
 
 // CURSOR
 const cursor=document.getElementById('cursor');
