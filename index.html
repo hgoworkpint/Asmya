@@ -620,7 +620,8 @@ const stories = [
     excerpt: "Every Friday night she comes back from handball practice. I\u2019ve been holding back for three weeks. Tonight is different.",
     date: "June 14, 2026",
     readTime: 8,
-    heroImg: "",
+    heroImg: "https://images.unsplash.com/photo-1730523169327-64d90e3f955b?q=80&w=1170&auto=format&fit=crop",
+    heroImgFull: "https://images.unsplash.com/photo-1730523169266-dfc9dc36cacc?q=80&w=1170&auto=format&fit=crop",
     content: "<p>Friday night, the weekend \u2014 which means my sister\u2019s best friend was going to spend the night at our house because every Friday they come home from sports practice.</p><p>They\u2019ve been playing handball on the same team for a while now. I\u2019m 22, they are 20. I only met her best friend recently \u2014 since the practice is far from her house, her parents agreed to let her stay at our place on Fridays. Much to my delight.</p><p>When they get back from practice, the girls hang out in the living room to eat. We have a corner sofa; I\u2019m usually at the end facing the TV, and they\u2019re at the other end by the coffee table.</p><p>I have a fetish, and Lucie \u2014 my sister\u2019s best friend \u2014 has noticed. She does everything she can to get me to look at her feet. She knows I can\u2019t resist. Especially when she\u2019s wearing her low-cut socks, size 36, still warm from training...</p><p>I can literally smell them from across the couch. Lucie knows full well that when she\u2019s there, my breathing changes. Her feet resting on the table, the trail of warmth left when she shifts position \u2014 it\u2019s been three weeks of holding back. Tonight is different.</p><p>The moment comes when my sister leaves to shower. We\u2019re alone, just her and me. She moves closer to see what I\u2019m doing \u2014 in reality, I\u2019d been stealing glances. I quickly open an app. She watches me with a small smile that tells me she knows exactly what\u2019s happening.</p><p>When my sister comes out of the shower, it\u2019s Lucie\u2019s turn. I head upstairs. Standing in the hallway, the scent from her socks left by the bathroom door is overwhelming. I stand there longer than I should.</p><p>She opens the door right in front of me \u2014 clothes in her arms, baggy t-shirt, shorts. An awkward moment. As she walks toward my sister\u2019s room, one of her socks falls into the hallway without her noticing. It\u2019s late. I pick it up.</p><p>Back in my room, I can\u2019t help myself. When her knock comes moments later, I know she noticed the missing sock too quickly. I hide it \u2014 badly \u2014 and open the door.</p><p>She steps in. Takes one breath. Then: <em>\u201cWait. I recognize that smell.\u201d</em></p><p><em>\u201cI knew you were like this,\u201d</em> she says slowly, <em>\u201cbut to this extent?\u201d</em></p><p>I say nothing. She looks me straight in the eye. <em>\u201cFor three weeks, this is what you\u2019ve been dreaming about?\u201d</em></p><p>My sister\u2019s room is down the hall. Lucie knows she can\u2019t hear us. She steps closer.</p><p><em>\u201cI dropped it on purpose,\u201d</em> she says quietly. <em>\u201cI wanted to see what you\u2019d do. I\u2019m not disappointed.\u201d</em></p><p>She retrieves the sock slowly, then sits on the edge of my bed, feet hanging off the side. <em>\u201cTonight\u2019s practice really hurt my feet. Since you seem to like them so much \u2014 you\u2019re going to take care of that.\u201d</em></p><p>I get on the floor. I begin. Her socks are still warm, still carrying the whole evening with them. She makes quiet sounds that tell me she\u2019s enjoying every second.</p><p>What follows is slow, deliberate, entirely on her terms \u2014 every movement she permits, every moment she controls. By the end, she stands, smooths her shirt, and walks toward the door with a soft laugh.</p><p>The next morning she\u2019s gone before breakfast. But she\u2019d slipped something under my door during the night \u2014 the second sock \u2014 because she knew I wouldn\u2019t make it through without it.</p>"
   }
 ];
@@ -628,7 +629,7 @@ const stories = [
 function renderStories() {
   const grid = document.getElementById('storiesGrid');
   if (!grid) return;
-  grid.innerHTML = stories.map(s => {
+  const cards = stories.map(s => {
     const img = s.heroImg ? '<img class="story-card-img" src="' + s.heroImg + '">' : '';
     return '<a class="story-card" href="#" onclick="openStory(stories.find(x=>x.id===' + s.id + '));return false;">'
       + '<div style="width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#0d0808,#1a1010);overflow:hidden;">' + img + '</div>'
@@ -638,14 +639,33 @@ function renderStories() {
       + '<div class="story-card-excerpt">' + s.excerpt + '</div>'
       + '<div class="story-card-meta">' + s.date + ' &mdash; ' + s.readTime + ' min read</div>'
       + '</div></a>';
-  }).join('');
+  });
+
+  const comingSoon = '<div class="story-card" style="cursor:default;">'
+    + '<div style="width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#0d0808,#1a1010);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;">'
+    + '<div style="width:40px;height:1px;background:#a07060;"></div>'
+    + '<div style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:#a07060;font-family:Montserrat,sans-serif;font-weight:300;">Coming Soon</div>'
+    + '<div style="width:40px;height:1px;background:#a07060;"></div>'
+    + '</div>'
+    + '<div class="story-card-body">'
+    + '<div class="story-card-tag">Fiction &mdash; 18+</div>'
+    + '<div class="story-card-title" style="color:rgba(245,240,234,0.3);">New story incoming...</div>'
+    + '<div class="story-card-excerpt" style="color:rgba(245,240,234,0.25);">A new story is being written. Check back soon.</div>'
+    + '<div class="story-card-meta" style="color:rgba(245,240,234,0.2);">Coming soon</div>'
+    + '</div></div>';
+
+  // Fill to minimum 3 cards
+  let html = cards.join('');
+  let total = stories.length;
+  while (total < 3) { html += comingSoon; total++; }
+  grid.innerHTML = html;
 }
 
 function openStory(s) {
   document.getElementById('storyTitle').textContent = s.title;
   document.getElementById('storyMeta').textContent = s.date + ' — ' + s.readTime + ' min read';
   document.getElementById('storyContent').innerHTML = s.content;
-  document.getElementById('storyHeroBg').innerHTML = s.heroImg ? '<img src="' + s.heroImg + '">' : '';
+  document.getElementById('storyHeroBg').innerHTML = (s.heroImgFull||s.heroImg) ? '<img src="' + (s.heroImgFull||s.heroImg) + '">' : '';
   document.getElementById('storyPage').classList.add('open');
   document.body.style.overflow = 'auto';
   window.scrollTo(0, 0);
